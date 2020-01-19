@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -23,6 +25,10 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
 @SpringBootTest(webEnvironment = MOCK)
 @DirtiesContext
 @ActiveProfiles("test")
@@ -46,8 +52,14 @@ class UserRestControllerIntegrationTest {
   private ObjectMapper objectMapper = new ObjectMapper();
 
   @BeforeEach
-  void setup() {
-    mvc = MockMvcBuilders.webAppContextSetup(context).build();
+  void setup(RestDocumentationContextProvider restDocumentationContextProvider) {
+    mvc = MockMvcBuilders.webAppContextSetup(context)
+            .apply(
+                    documentationConfiguration(restDocumentationContextProvider)
+                            .operationPreprocessors()
+                            .withRequestDefaults(prettyPrint(), modifyUris().port(9090))
+                            .withResponseDefaults(prettyPrint(), modifyUris().port(9090)))
+            .build();
   }
 
   @Nested
@@ -66,7 +78,8 @@ class UserRestControllerIntegrationTest {
                   .content(objectMapper.writeValueAsString(model)))
           .andExpect(status().isCreated())
           .andExpect(header().exists("location"))
-          .andExpect(jsonPath("$.identifier").exists());
+          .andExpect(jsonPath("$.identifier").exists())
+          .andDo(document("create-user"));
     }
 
     @Test
@@ -84,7 +97,8 @@ class UserRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model)))
           .andExpect(status().isOk())
-          .andExpect(jsonPath("$.lastName").value("Mustermann"));
+          .andExpect(jsonPath("$.lastName").value("Mustermann"))
+          .andDo(document("update-user"));
     }
 
     @Test
@@ -92,7 +106,8 @@ class UserRestControllerIntegrationTest {
     void listAllUsers() throws Exception {
       mvc.perform(get("/users"))
           .andExpect(status().isOk())
-          .andExpect(jsonPath("$.users.length()").value(greaterThan(0)));
+          .andExpect(jsonPath("$.users.length()").value(greaterThan(0)))
+          .andDo(document("get-users"));
     }
 
     @Test
@@ -102,14 +117,16 @@ class UserRestControllerIntegrationTest {
           .andExpect(status().isOk())
           .andExpect(
               jsonPath("$.identifier").value(DataInitializer.WAYNE_USER_IDENTIFIER.toString()))
-          .andExpect(jsonPath("$.lastName").value("Wayne"));
+          .andExpect(jsonPath("$.lastName").value("Wayne"))
+          .andDo(document("get-user"));
     }
 
     @Test
     @DisplayName("in deleting an user")
     void deleteUser() throws Exception {
       mvc.perform(delete("/users/{userIdentifier}", DataInitializer.CURATOR_IDENTIFIER))
-          .andExpect(status().isNoContent());
+          .andExpect(status().isNoContent())
+          .andDo(document("delete-user"));
     }
   }
 

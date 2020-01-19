@@ -1,8 +1,14 @@
+buildscript {
+	ext {
+		snippetsDir = file('build/generated-snippets')
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.2.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'com.adarshr.test-logger' version '2.0.0'
-	id "com.github.spotbugs" version "3.0.0"
+	id 'org.asciidoctor.convert' version '1.5.8'
 	id "org.owasp.dependencycheck" version "5.3.0"
 	id 'java'
 }
@@ -37,26 +43,28 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
 test {
 	useJUnitPlatform()
+	outputs.dir snippetsDir
 }
 
-spotbugs {
-	effort = "max"
-	reportLevel = "high"
-	excludeFilter = file("$rootProject.projectDir/excludeFilter.xml")
+asciidoctor {
+	inputs.dir snippetsDir
+	setOptions([
+			'doctype': 'book',
+			'backend': 'html5'
+	])
+	setAttributes([
+			'snippets'          : snippetsDir,
+			'source-highlighter': 'coderay',
+			'toc'               : 'left',
+			'toclevels'         : '3',
+			'sectlinks'         : 'true'
+	])
+	dependsOn test
 }
 
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-	reports {
-		html {
-			enabled = true
-		}
-		xml {
-			enabled = false
-		}
-	}
-}
+
