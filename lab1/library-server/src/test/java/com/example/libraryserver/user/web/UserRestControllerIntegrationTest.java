@@ -146,7 +146,9 @@ class UserRestControllerIntegrationTest {
                   .content(objectMapper.writeValueAsString(model)))
           .andExpect(status().isBadRequest())
           .andExpect(
-              content().string(startsWith("Field error in object 'userModel' on field 'email'")));
+              content()
+                  .string(
+                      startsWith("Field error in object \\'userModel\\' on field \\'email\\'")));
     }
 
     @Test
@@ -165,7 +167,9 @@ class UserRestControllerIntegrationTest {
                   .content(objectMapper.writeValueAsString(model)))
           .andExpect(status().isBadRequest())
           .andExpect(
-              content().string(startsWith("Field error in object 'userModel' on field 'email'")));
+              content()
+                  .string(
+                      startsWith("Field error in object \\'userModel\\' on field \\'email\\'")));
     }
 
     @Test

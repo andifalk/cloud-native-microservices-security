@@ -1,5 +1,6 @@
 package com.example.libraryserver.common.web;
 
+import org.owasp.encoder.Encode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,11 @@ public class ErrorHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<String> handle(MethodArgumentNotValidException ex) {
     LOGGER.warn(ex.getMessage());
-    return ResponseEntity.badRequest().body(ex.getBindingResult().getAllErrors().get(0).toString());
+    StringBuilder builder = new StringBuilder();
+    ex.getBindingResult().getAllErrors().forEach(
+      e -> builder.append(e.toString())
+    );
+    return ResponseEntity.badRequest().body(Encode.forJavaScriptSource(Encode.forHtmlContent(builder.toString())));
   }
 
   @ExceptionHandler(RuntimeException.class)

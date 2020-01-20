@@ -169,7 +169,8 @@ class BookRestControllerIntegrationTest {
                   .content(objectMapper.writeValueAsString(model)))
           .andExpect(status().isBadRequest())
           .andExpect(
-              content().string(startsWith("Field error in object 'bookModel' on field 'isbn'")));
+              content()
+                  .string(startsWith("Field error in object \\'bookModel\\' on field \\'isbn\\'")));
     }
 
     @Test
@@ -183,7 +184,8 @@ class BookRestControllerIntegrationTest {
                   .content(objectMapper.writeValueAsString(model)))
           .andExpect(status().isBadRequest())
           .andExpect(
-              content().string(startsWith("Field error in object 'bookModel' on field 'isbn'")));
+              content()
+                  .string(startsWith("Field error in object \\'bookModel\\' on field \\'isbn\\'")));
     }
 
     @Test
