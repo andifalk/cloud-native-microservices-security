@@ -78,13 +78,15 @@ public class UserRestController {
   @ResponseStatus(OK)
   @GetMapping
   public CollectionModel<UserModel> listAllUsers() {
-    CollectionModel<UserModel> userListModel = userModelAssembler.toCollectionModel(userService.findAll());
+    CollectionModel<UserModel> userListModel =
+        userModelAssembler.toCollectionModel(userService.findAll());
     userListModel.add(linkTo(UserRestController.class).withSelfRel());
     return userListModel;
   }
 
   @GetMapping("/{userIdentifier}")
-  public ResponseEntity<UserModel> getSingleUser(@PathVariable("userIdentifier") UUID userIdentifier) {
+  public ResponseEntity<UserModel> getSingleUser(
+      @PathVariable("userIdentifier") UUID userIdentifier) {
     return userService
         .findOneByIdentifier(userIdentifier)
         .map(u -> ResponseEntity.ok(userModelAssembler.toModel(u)))

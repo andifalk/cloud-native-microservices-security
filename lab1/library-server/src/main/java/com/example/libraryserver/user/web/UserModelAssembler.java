@@ -22,13 +22,14 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
   @Override
   public UserModel toModel(User user) {
     UserModel userModel =
-        outputEscaping(new UserModel(
-            user.getIdentifier(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getEmail(),
-            user.getPassword(),
-            user.getRoles()));
+        outputEscaping(
+            new UserModel(
+                user.getIdentifier(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getRoles()));
     userModel.add(
         linkTo(methodOn(UserRestController.class).getSingleUser(userModel.getIdentifier()))
             .withSelfRel());
@@ -55,7 +56,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
     output.setLastName(Encode.forJavaScript(Encode.forHtml(input.getLastName())));
     output.setPassword(input.getPassword());
     output.setIdentifier(input.getIdentifier());
-    for (String role: input.getRoles()) {
+    for (String role : input.getRoles()) {
       output.getRoles().add(Encode.forJavaScript(Encode.forHtml(role)));
     }
 

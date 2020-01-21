@@ -6,7 +6,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,12 +32,17 @@ public class UserModel extends RepresentationModel<UserModel> {
   public UserModel() {}
 
   public UserModel(
-          String firstName, String lastName, String email, String password, Set<String> roles) {
+      String firstName, String lastName, String email, String password, Set<String> roles) {
     this(null, firstName, lastName, email, password, roles);
   }
 
   public UserModel(
-      UUID identifier, String firstName, String lastName, String email, String password, Set<String> roles) {
+      UUID identifier,
+      String firstName,
+      String lastName,
+      String email,
+      String password,
+      Set<String> roles) {
     this.identifier = identifier;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -93,5 +97,27 @@ public class UserModel extends RepresentationModel<UserModel> {
 
   public void setRoles(Set<String> roles) {
     this.roles = roles;
+  }
+
+  @Override
+  public String toString() {
+    return "UserModel{"
+        + "identifier="
+        + identifier
+        + ", firstName='"
+        + firstName
+        + '\''
+        + ", lastName='"
+        + lastName
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + ", password='"
+        + password
+        + '\''
+        + ", roles="
+        + roles
+        + '}';
   }
 }

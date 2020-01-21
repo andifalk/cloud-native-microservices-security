@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public class UserModelList extends CollectionModel<UserModel> {
 
-  private Collection<UserModel> users;
+  private final Collection<UserModel> users;
 
   public UserModelList(Collection<UserModel> users) {
     this.users = users;

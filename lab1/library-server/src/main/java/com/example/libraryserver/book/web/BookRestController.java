@@ -90,26 +90,29 @@ public class BookRestController {
 
     return bookService
         .returnForUser(bookIdentifier, userIdentifier)
-            .map(b -> ResponseEntity.ok(bookModelAssembler.toModel(b)))
+        .map(b -> ResponseEntity.ok(bookModelAssembler.toModel(b)))
         .orElse(ResponseEntity.notFound().build());
   }
 
   @GetMapping
   public ResponseEntity<CollectionModel<BookModel>> listAllBooks() {
-    CollectionModel<BookModel> bookModel = bookModelAssembler.toCollectionModel(bookService.findAll());
+    CollectionModel<BookModel> bookModel =
+        bookModelAssembler.toCollectionModel(bookService.findAll());
     bookModel.add(linkTo(BookRestController.class).withSelfRel());
 
     return ResponseEntity.ok(bookModel);
   }
 
   @GetMapping("/{bookIdentifier}")
-  public ResponseEntity<BookModel> getSingleBook(@PathVariable("bookIdentifier") UUID bookIdentifier) {
+  public ResponseEntity<BookModel> getSingleBook(
+      @PathVariable("bookIdentifier") UUID bookIdentifier) {
     return bookService
         .findOneByIdentifier(bookIdentifier)
-        .map(b -> {
-          BookModel bookModel = bookModelAssembler.toModel(b);
-          return ResponseEntity.ok(bookModel);
-        })
+        .map(
+            b -> {
+              BookModel bookModel = bookModelAssembler.toModel(b);
+              return ResponseEntity.ok(bookModel);
+            })
         .orElse(ResponseEntity.notFound().build());
   }
 

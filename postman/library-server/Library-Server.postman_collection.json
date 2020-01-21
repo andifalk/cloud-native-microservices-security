@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "40173f3a-09d1-4ffb-b27e-fb30416ae81c",
+		"name": "Library-Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "List all books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/library/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/library/books/f9bf70d6-e56d-4cab-be6b-294cd05f599f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"books",
+								"f9bf70d6-e56d-4cab-be6b-294cd05f599f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/library/books/f9bf70d6-e56d-4cab-be6b-294cd05f599f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"books",
+								"f9bf70d6-e56d-4cab-be6b-294cd05f599f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"isbn\": \"9781942788000\",\n        \"title\": \"A title\",\n        \"description\": \"A description.\",\n        \"authors\": [\n            \"Author1\",\n            \"Author2\"\n        ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/library/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"isbn\": \"9781942788000\",\n        \"title\": \"A title\",\n        \"description\": \"A description.\",\n        \"authors\": [\n            \"Author1\",\n            \"Author2\"\n        ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/library/books/f9bf70d6-e56d-4cab-be6b-294cd05f599f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"books",
+								"f9bf70d6-e56d-4cab-be6b-294cd05f599f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrow a book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9090/library/books/02c3d1fb-ca32-46bd-818f-704012b3fe9c/borrow/69c10574-9064-40e4-85bd-5c68547f3f48",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"books",
+								"02c3d1fb-ca32-46bd-818f-704012b3fe9c",
+								"borrow",
+								"69c10574-9064-40e4-85bd-5c68547f3f48"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9090/library/books/02c3d1fb-ca32-46bd-818f-704012b3fe9c/return/69c10574-9064-40e4-85bd-5c68547f3f48",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"books",
+								"02c3d1fb-ca32-46bd-818f-704012b3fe9c",
+								"return",
+								"69c10574-9064-40e4-85bd-5c68547f3f48"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/library/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/library/users/69c10574-9064-40e4-85bd-5c68547f3f48",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"users",
+								"69c10574-9064-40e4-85bd-5c68547f3f48"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/library/users/69c10574-9064-40e4-85bd-5c68547f3f48",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"users",
+								"69c10574-9064-40e4-85bd-5c68547f3f48"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"firstName\": \"Hans\",\n        \"lastName\": \"Mustermann\",\n        \"email\": \"test@example.com\",\n        \"password\": \"secret\",\n        \"roles\": [\n            \"USER\",\n            \"ADMIN\"\n        ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/library/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"firstName\": \"Hans\",\n        \"lastName\": \"Mustermann\",\n        \"email\": \"test@example.com\",\n        \"password\": \"secret\",\n        \"roles\": [\n            \"USER\",\n            \"ADMIN\"\n        ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/library/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"library",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

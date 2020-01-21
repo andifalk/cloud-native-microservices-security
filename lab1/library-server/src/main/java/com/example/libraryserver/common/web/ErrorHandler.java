@@ -19,10 +19,9 @@ public class ErrorHandler {
   public ResponseEntity<String> handle(MethodArgumentNotValidException ex) {
     LOGGER.warn(ex.getMessage());
     StringBuilder builder = new StringBuilder();
-    ex.getBindingResult().getAllErrors().forEach(
-      e -> builder.append(e.toString())
-    );
-    return ResponseEntity.badRequest().body(Encode.forJavaScriptSource(Encode.forHtmlContent(builder.toString())));
+    ex.getBindingResult().getAllErrors().forEach(e -> builder.append(e.toString()));
+    return ResponseEntity.badRequest()
+        .body(Encode.forJavaScriptSource(Encode.forHtmlContent(builder.toString())));
   }
 
   @ExceptionHandler(RuntimeException.class)

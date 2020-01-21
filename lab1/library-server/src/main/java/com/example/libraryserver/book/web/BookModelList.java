@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public class BookModelList extends CollectionModel<BookModel> {
 
-  private Collection<BookModel> books;
+  private final Collection<BookModel> books;
 
   public BookModelList(Collection<BookModel> books) {
     this.books = books;

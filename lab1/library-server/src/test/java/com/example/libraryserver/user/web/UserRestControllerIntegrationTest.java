@@ -49,16 +49,17 @@ class UserRestControllerIntegrationTest {
 
   private MockMvc mvc;
 
-  private ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
   @BeforeEach
   void setup(RestDocumentationContextProvider restDocumentationContextProvider) {
-    mvc = MockMvcBuilders.webAppContextSetup(context)
+    mvc =
+        MockMvcBuilders.webAppContextSetup(context)
             .apply(
-                    documentationConfiguration(restDocumentationContextProvider)
-                            .operationPreprocessors()
-                            .withRequestDefaults(prettyPrint(), modifyUris().port(9090))
-                            .withResponseDefaults(prettyPrint(), modifyUris().port(9090)))
+                documentationConfiguration(restDocumentationContextProvider)
+                    .operationPreprocessors()
+                    .withRequestDefaults(prettyPrint(), modifyUris().port(9090))
+                    .withResponseDefaults(prettyPrint(), modifyUris().port(9090)))
             .build();
   }
 

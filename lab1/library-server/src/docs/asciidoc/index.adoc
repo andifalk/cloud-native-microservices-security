@@ -58,27 +58,6 @@ further information.
 
 The REST API uses HATEOAS to include links to further resources or actions using hypermedia links.
 
-=== User API
-
-|===
-| REST API | Required Role
-
-| `GET /users`
-| LIBRARY_ADMIN
-
-| `GET /users/{userIdentifier}`
-| LIBRARY_ADMIN
-
-| `POST /users`
-| LIBRARY_ADMIN
-
-| `PUT /users/{userIdentifier}`
-| LIBRARY_ADMIN
-
-| `DELETE /users/{userIdentifier}`
-| LIBRARY_ADMIN
-|===
-
 == Resources
 
 === Books

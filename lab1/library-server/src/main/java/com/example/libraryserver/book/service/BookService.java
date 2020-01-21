@@ -52,7 +52,10 @@ public class BookService {
 
   @Transactional
   public Optional<Book> borrowForUser(UUID bookIdentifier, UUID userIdentifier) {
-    LOGGER.trace("borrow book with identifier {} for user with identifier {}", bookIdentifier, userIdentifier);
+    LOGGER.trace(
+        "borrow book with identifier {} for user with identifier {}",
+        bookIdentifier,
+        userIdentifier);
 
     return bookRepository
         .findOneByIdentifier(bookIdentifier)
@@ -73,7 +76,10 @@ public class BookService {
 
   @Transactional
   public Optional<Book> returnForUser(UUID bookIdentifier, UUID userIdentifier) {
-    LOGGER.trace("return book with identifier {} of user with identifier {}", bookIdentifier, userIdentifier);
+    LOGGER.trace(
+        "return book with identifier {} of user with identifier {}",
+        bookIdentifier,
+        userIdentifier);
 
     return bookRepository
         .findOneByIdentifier(bookIdentifier)

@@ -1,7 +1,6 @@
 package com.example.libraryserver.book.data;
 
 import com.example.libraryserver.user.data.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.ElementCollection;
@@ -63,18 +62,6 @@ public class Book extends AbstractPersistable<Long> {
     this.description = description;
     this.authors = authors;
     this.borrowedByUser = borrowedByUser;
-  }
-
-  @JsonIgnore
-  @Override
-  public Long getId() {
-    return super.getId();
-  }
-
-  @JsonIgnore
-  @Override
-  public boolean isNew() {
-    return super.isNew();
   }
 
   public UUID getIdentifier() {

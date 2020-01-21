@@ -57,18 +57,6 @@ public class User extends AbstractPersistable<Long> {
     this.roles = roles;
   }
 
-  @JsonIgnore
-  @Override
-  public Long getId() {
-    return super.getId();
-  }
-
-  @JsonIgnore
-  @Override
-  public boolean isNew() {
-    return super.isNew();
-  }
-
   public UUID getIdentifier() {
     return identifier;
   }
