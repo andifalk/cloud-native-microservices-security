@@ -1,3 +1,5 @@
+![](https://github.com/andifalk/cloud-native-microservices-security/workflows/Java%20CI/badge.svg)
+
 # Cloud-Native Microservice Security Bootcamp
 
 # Day 1
