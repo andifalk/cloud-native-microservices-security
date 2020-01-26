@@ -2,3 +2,4 @@ rootProject.name = 'cloud-native-microservices-security'
 
 include 'lab1:library-server'
 include 'lab1:library-server-complete'
+include 'lab2:library-server-complete'
