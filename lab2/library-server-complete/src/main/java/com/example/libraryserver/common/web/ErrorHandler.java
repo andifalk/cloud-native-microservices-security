@@ -1,5 +1,6 @@
 package com.example.libraryserver.common.web;
 
+import com.example.libraryserver.user.service.InvalidPasswordError;
 import org.owasp.encoder.Encode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,13 @@ public class ErrorHandler {
     ex.getBindingResult().getAllErrors().forEach(e -> builder.append(e.toString()));
     return ResponseEntity.badRequest()
         .body(Encode.forJavaScriptSource(Encode.forHtmlContent(builder.toString())));
+  }
+
+  @ExceptionHandler(InvalidPasswordError.class)
+  public ResponseEntity<String> handle(InvalidPasswordError ex) {
+    LOGGER.warn(ex.getMessage());
+    return ResponseEntity.badRequest()
+            .body(Encode.forJavaScriptSource(Encode.forHtmlContent(ex.getMessage())));
   }
 
   @ExceptionHandler(RuntimeException.class)

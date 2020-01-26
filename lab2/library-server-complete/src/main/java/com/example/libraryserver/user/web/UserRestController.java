@@ -1,6 +1,7 @@
 package com.example.libraryserver.user.web;
 
 import com.example.libraryserver.user.data.User;
+import com.example.libraryserver.user.service.PasswordValidationService;
 import com.example.libraryserver.user.service.UserService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +30,21 @@ import static org.springframework.http.HttpStatus.OK;
 public class UserRestController {
 
   private final UserService userService;
+  private final PasswordValidationService passwordValidationService;
   private final UserModelAssembler userModelAssembler;
 
-  public UserRestController(UserService userService, UserModelAssembler userModelAssembler) {
+  public UserRestController(UserService userService, PasswordValidationService passwordValidationService, UserModelAssembler userModelAssembler) {
     this.userService = userService;
+    this.passwordValidationService = passwordValidationService;
     this.userModelAssembler = userModelAssembler;
   }
 
   @PostMapping
   public ResponseEntity<UserModel> registerUser(
       @RequestBody @Valid UserModel userModel, HttpServletRequest request) {
+
+    passwordValidationService.validate(userModel.getEmail(), userModel.getPassword());
+
     User user =
         userService.save(
             new User(
@@ -65,6 +71,9 @@ public class UserRestController {
         .findOneByIdentifier(userIdentifier)
         .map(
             u -> {
+              if (!u.getPassword().equals(userModel.getPassword())) {
+                passwordValidationService.validate(userModel.getEmail(), userModel.getPassword());
+              }
               u.setFirstName(userModel.getFirstName());
               u.setLastName(userModel.getLastName());
               u.setEmail(userModel.getEmail());
