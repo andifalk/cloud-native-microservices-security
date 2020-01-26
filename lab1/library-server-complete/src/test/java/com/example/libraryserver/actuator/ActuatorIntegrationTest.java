@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = MOCK)
 @DirtiesContext
 @ActiveProfiles("test")
-@DisplayName("Verify spring boot actuator api")
+@DisplayName("Calling spring boot actuator")
 class ActuatorIntegrationTest {
 
   @Autowired private WebApplicationContext context;
@@ -43,7 +43,7 @@ class ActuatorIntegrationTest {
   class PositiveTests {
 
     @Test
-    @DisplayName("in evaluating application health")
+    @DisplayName("for health endpoint")
     void health() throws Exception {
 
       mvc.perform(get("/actuator/health"))
@@ -53,7 +53,7 @@ class ActuatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("in evaluating application info")
+    @DisplayName("for info endpoint")
     void info() throws Exception {
 
       mvc.perform(get("/actuator/info"))
@@ -62,7 +62,7 @@ class ActuatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("in evaluating application env")
+    @DisplayName("for env endpoint")
     void env() throws Exception {
 
       mvc.perform(get("/actuator/env").with(user("user").roles("USER")))
@@ -71,7 +71,7 @@ class ActuatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("in evaluating application metrics")
+    @DisplayName("for metrics endpoint")
     void metrics() throws Exception {
 
       mvc.perform(get("/actuator/metrics").with(user("user").roles("USER")))
@@ -82,5 +82,22 @@ class ActuatorIntegrationTest {
 
   @Nested
   @DisplayName("fails")
-  class NegativeTests {}
+  class NegativeTests {
+
+    @Test
+    @DisplayName("for env endpoint when user is not authenticated")
+    void env() throws Exception {
+
+      mvc.perform(get("/actuator/env"))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("for metrics endpoint when user is not authenticated")
+    void metrics() throws Exception {
+
+      mvc.perform(get("/actuator/metrics"))
+              .andExpect(status().isUnauthorized());
+    }
+  }
 }
