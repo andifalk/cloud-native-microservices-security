@@ -30,6 +30,9 @@ public class DataInitializer implements CommandLineRunner {
       UUID.fromString("40c5ad0d-41f7-494b-8157-33fad16012aa");
   public static final UUID ADMIN_IDENTIFIER =
       UUID.fromString("0d2c04f1-e25f-41b5-b4cd-3566a081200f");
+  public static final UUID LEGACY_USER_IDENTIFIER =
+      UUID.fromString("e94858cf-6fb6-4ed0-a370-4073ebcb54ee");
+
   public static final UUID BOOK_CLEAN_CODE_IDENTIFIER =
       UUID.fromString("f9bf70d6-e56d-4cab-be6b-294cd05f599f");
   public static final UUID BOOK_CLOUD_NATIVE_IDENTIFIER =
@@ -59,6 +62,13 @@ public class DataInitializer implements CommandLineRunner {
     LOGGER.info("Creating users with LIBRARY_USER, LIBRARY_CURATOR and LIBRARY_ADMIN roles...");
     List<User> userList =
         Stream.of(
+                new User(
+                    LEGACY_USER_IDENTIFIER,
+                    "Doctor",
+                    "Strange",
+                    "doctor.strange@example.com",
+                    "strange",
+                    Collections.singleton("LIBRARY_USER")),
                 new User(
                     WAYNE_USER_IDENTIFIER,
                     "Bruce",

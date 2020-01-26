@@ -31,6 +31,10 @@ public class UserService {
     return userRepository.findOneByIdentifier(identifier);
   }
 
+  public Optional<User> findOneByEmail(String email) {
+    return userRepository.findOneByEmail(email);
+  }
+
   public List<User> findAll() {
     LOGGER.trace("find all users");
 

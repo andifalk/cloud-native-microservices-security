@@ -65,7 +65,7 @@ class ActuatorIntegrationTest {
     @DisplayName("for env endpoint")
     void env() throws Exception {
 
-      mvc.perform(get("/actuator/env").with(user("user").roles("USER")))
+      mvc.perform(get("/actuator/env").with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.propertySources.length()").value(greaterThan(0)));
     }
@@ -74,7 +74,7 @@ class ActuatorIntegrationTest {
     @DisplayName("for metrics endpoint")
     void metrics() throws Exception {
 
-      mvc.perform(get("/actuator/metrics").with(user("user").roles("USER")))
+      mvc.perform(get("/actuator/metrics").with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.names").exists());
     }
