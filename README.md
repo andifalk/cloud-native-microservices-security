@@ -2,6 +2,8 @@
 
 # Cloud-Native Microservice Security Bootcamp
 
+[Tutorial](https://andifalk.gitbook.io/cloud-native-microservices-security)
+
 ## Day 1: Basic Security + Kubernetes Security
 
 ### Security in Software Development Lifecycle
