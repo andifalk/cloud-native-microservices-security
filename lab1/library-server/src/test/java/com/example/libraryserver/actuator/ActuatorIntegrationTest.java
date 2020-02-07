@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = MOCK)
 @DirtiesContext
 @ActiveProfiles("test")
-@DisplayName("Verify spring boot actuator api")
+@DisplayName("Calling spring boot actuator")
 class ActuatorIntegrationTest {
 
   @Autowired private WebApplicationContext context;
@@ -41,7 +41,7 @@ class ActuatorIntegrationTest {
   class PositiveTests {
 
     @Test
-    @DisplayName("in evaluating application health")
+    @DisplayName("for health endpoint")
     void health() throws Exception {
 
       mvc.perform(get("/actuator/health"))
@@ -51,7 +51,7 @@ class ActuatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("in evaluating application info")
+    @DisplayName("for info endpoint")
     void info() throws Exception {
 
       mvc.perform(get("/actuator/info"))
@@ -60,7 +60,7 @@ class ActuatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("in evaluating application env")
+    @DisplayName("for env endpoint")
     void env() throws Exception {
 
       mvc.perform(get("/actuator/env"))
@@ -69,7 +69,7 @@ class ActuatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("in evaluating application metrics")
+    @DisplayName("for metrics endpoint")
     void metrics() throws Exception {
 
       mvc.perform(get("/actuator/metrics"))

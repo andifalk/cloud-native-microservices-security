@@ -23,17 +23,13 @@ public class UserModel extends RepresentationModel<UserModel> {
 
   @Email private String email;
 
-  @NotNull
-  @Size(min = 1, max = 200)
-  private String password;
-
   private Set<String> roles = new HashSet<>();
 
   public UserModel() {}
 
   public UserModel(
-      String firstName, String lastName, String email, String password, Set<String> roles) {
-    this(null, firstName, lastName, email, password, roles);
+      String firstName, String lastName, String email, Set<String> roles) {
+    this(null, firstName, lastName, email, roles);
   }
 
   public UserModel(
@@ -41,13 +37,11 @@ public class UserModel extends RepresentationModel<UserModel> {
       String firstName,
       String lastName,
       String email,
-      String password,
       Set<String> roles) {
     this.identifier = identifier;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
-    this.password = password;
     this.roles = roles;
   }
 
@@ -83,14 +77,6 @@ public class UserModel extends RepresentationModel<UserModel> {
     this.email = email;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public Set<String> getRoles() {
     return roles;
   }
@@ -112,9 +98,6 @@ public class UserModel extends RepresentationModel<UserModel> {
         + '\''
         + ", email='"
         + email
-        + '\''
-        + ", password='"
-        + password
         + '\''
         + ", roles="
         + roles

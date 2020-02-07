@@ -64,7 +64,6 @@ class UserRestControllerIntegrationTest {
                     .operationPreprocessors()
                     .withRequestDefaults(prettyPrint(), modifyUris().port(9090))
                     .withResponseDefaults(prettyPrint(), modifyUris().port(9090)))
-            .defaultRequest(post("/").with(csrf()).with(user("user").roles("LIBRARY_ADMIN")))
             .build();
   }
 
@@ -75,13 +74,13 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in registering a new user")
     void registerUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans", "Mustermann", "test@example.com", "MySecret4Test", Collections.singleton("USER"));
       mvc.perform(
               post("/users")
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isCreated())
           .andExpect(header().exists("location"))
           .andExpect(jsonPath("$.identifier").exists())
@@ -91,8 +90,8 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in updating an existing user")
     void updateUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans",
               "Mustermann",
               "test@example.com",
@@ -101,7 +100,7 @@ class UserRestControllerIntegrationTest {
       mvc.perform(
               put("/users/{userIdentifier}", DataInitializer.ADMIN_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.lastName").value("Mustermann"))
           .andDo(document("update-user"));
@@ -110,7 +109,7 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in getting a list of all users")
     void listAllUsers() throws Exception {
-      mvc.perform(get("/users"))
+      mvc.perform(get("/users").with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.users.length()").value(greaterThan(0)))
           .andDo(document("get-users"));
@@ -119,7 +118,7 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in getting a single user")
     void getSingleUser() throws Exception {
-      mvc.perform(get("/users/{userIdentifier}", DataInitializer.WAYNE_USER_IDENTIFIER))
+      mvc.perform(get("/users/{userIdentifier}", DataInitializer.WAYNE_USER_IDENTIFIER).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isOk())
           .andExpect(
               jsonPath("$.identifier").value(DataInitializer.WAYNE_USER_IDENTIFIER.toString()))
@@ -130,7 +129,7 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in deleting an user")
     void deleteUser() throws Exception {
-      mvc.perform(delete("/users/{userIdentifier}", DataInitializer.CURATOR_IDENTIFIER))
+      mvc.perform(delete("/users/{userIdentifier}", DataInitializer.CURATOR_IDENTIFIER).with(csrf()).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isNoContent())
           .andDo(document("delete-user"));
     }
@@ -143,25 +142,25 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in registering a new user with invalid email")
     void registerUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans", "Mustermann", "example.com", "password", Collections.singleton("USER"));
       mvc.perform(
               post("/users")
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
                   .string(
-                      startsWith("Field error in object \\'userModel\\' on field \\'email\\'")));
+                      startsWith("Field error in object \\'createUserModel\\' on field \\'email\\'")));
     }
 
     @Test
     @DisplayName("in updating an existing user with invalid email")
     void updateUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans",
               "Mustermann",
               "example.com",
@@ -170,26 +169,124 @@ class UserRestControllerIntegrationTest {
       mvc.perform(
               put("/users/{userIdentifier}", DataInitializer.ADMIN_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
                   .string(
-                      startsWith("Field error in object \\'userModel\\' on field \\'email\\'")));
+                      startsWith("Field error in object \\'createUserModel\\' on field \\'email\\'")));
     }
 
     @Test
     @DisplayName("in getting an unknown user")
     void getSingleUser() throws Exception {
-      mvc.perform(get("/users/{userIdentifier}", UUID.randomUUID()))
+      mvc.perform(get("/users/{userIdentifier}", UUID.randomUUID()).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isNotFound());
     }
 
     @Test
     @DisplayName("in deleting an unknown user")
     void deleteUser() throws Exception {
-      mvc.perform(delete("/users/{userIdentifier}", UUID.randomUUID()))
+      mvc.perform(delete("/users/{userIdentifier}", UUID.randomUUID()).with(csrf()).with(user("user").roles("LIBRARY_ADMIN")))
           .andExpect(status().isNotFound());
+    }
+  }
+
+  @Nested
+  @DisplayName("fails with unauthorized")
+  class AuthenticationTests {
+
+    @Test
+    @DisplayName("in registering a new user")
+    void registerUserUnAuthorized() throws Exception {
+      CreateUserModel model =
+              new CreateUserModel(
+                      "Hans", "Mustermann", "test@example.com", "MySecret4Test", Collections.singleton("USER"));
+      mvc.perform(
+              post("/users")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in updating an existing user")
+    void updateUserUnAuthorized() throws Exception {
+      CreateUserModel model =
+              new CreateUserModel(
+                      "Hans",
+                      "Mustermann",
+                      "test@example.com",
+                      "MySecret4Test",
+                      Collections.singleton("LIBRARY_ADMIN"));
+      mvc.perform(
+              put("/users/{userIdentifier}", DataInitializer.ADMIN_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in getting a list of all users")
+    void listAllUsersUnAuthorized() throws Exception {
+      mvc.perform(get("/users"))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in getting a single user")
+    void getSingleUserUnAuthorized() throws Exception {
+      mvc.perform(get("/users/{userIdentifier}", DataInitializer.WAYNE_USER_IDENTIFIER))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in deleting an user")
+    void deleteUserUnAuthorized() throws Exception {
+      mvc.perform(delete("/users/{userIdentifier}", DataInitializer.CURATOR_IDENTIFIER).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+  }
+
+  @DisplayName("fails for missing CSRF token")
+  @Nested
+  class CsrfTokenTests {
+
+    @Test
+    @DisplayName("in registering a new user")
+    void registerUserNoCsrfToken() throws Exception {
+      CreateUserModel model =
+              new CreateUserModel(
+                      "Hans", "Mustermann", "test@example.com", "MySecret4Test", Collections.singleton("USER"));
+      mvc.perform(
+              post("/users")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(user("user").roles("LIBRARY_ADMIN")))
+              .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("in updating an existing user")
+    void updateUserNoCsrfToken() throws Exception {
+      CreateUserModel model =
+              new CreateUserModel(
+                      "Hans",
+                      "Mustermann",
+                      "test@example.com",
+                      "MySecret4Test",
+                      Collections.singleton("LIBRARY_ADMIN"));
+      mvc.perform(
+              put("/users/{userIdentifier}", DataInitializer.ADMIN_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(user("user").roles("LIBRARY_ADMIN")))
+              .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("in deleting an user")
+    void deleteUserNoCsrfToken() throws Exception {
+      mvc.perform(delete("/users/{userIdentifier}", DataInitializer.CURATOR_IDENTIFIER).with(user("user").roles("LIBRARY_ADMIN")))
+              .andExpect(status().isForbidden());
     }
   }
 }

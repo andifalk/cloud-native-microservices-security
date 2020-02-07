@@ -64,7 +64,6 @@ class BookRestControllerIntegrationTest {
                     .operationPreprocessors()
                     .withRequestDefaults(prettyPrint(), modifyUris().port(9090))
                     .withResponseDefaults(prettyPrint(), modifyUris().port(9090)))
-            .defaultRequest(post("/").with(csrf()).with(user("user").roles("USER")))
             .build();
   }
 
@@ -81,7 +80,7 @@ class BookRestControllerIntegrationTest {
       mvc.perform(
               post("/books")
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user")))
           .andExpect(status().isCreated())
           .andExpect(header().exists("location"))
           .andExpect(jsonPath("$.identifier").exists())
@@ -96,7 +95,7 @@ class BookRestControllerIntegrationTest {
       mvc.perform(
               put("/books/{bookIdentifier}", DataInitializer.BOOK_DEVOPS_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.title").value("title"))
           .andDo(document("update-book"));
@@ -110,7 +109,7 @@ class BookRestControllerIntegrationTest {
                       "/books/{bookIdentifier}/borrow/{userIdentifier}",
                       DataInitializer.BOOK_SPRING_ACTION_IDENTIFIER,
                       DataInitializer.BANNER_USER_IDENTIFIER)
-                  .contentType(MediaType.APPLICATION_JSON))
+                  .contentType(MediaType.APPLICATION_JSON).with(csrf()).with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.borrowedByUser").exists())
           .andDo(document("borrow-book"));
@@ -124,7 +123,7 @@ class BookRestControllerIntegrationTest {
                       "/books/{bookIdentifier}/return/{userIdentifier}",
                       DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER,
                       DataInitializer.WAYNE_USER_IDENTIFIER)
-                  .contentType(MediaType.APPLICATION_JSON))
+                  .contentType(MediaType.APPLICATION_JSON).with(csrf()).with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.borrowedByUser").doesNotExist())
           .andDo(document("return-book"));
@@ -133,7 +132,7 @@ class BookRestControllerIntegrationTest {
     @Test
     @DisplayName("in getting a list of all books")
     void listAllBooks() throws Exception {
-      mvc.perform(get("/books"))
+      mvc.perform(get("/books").with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.books.length()").value(greaterThan(0)))
           .andDo(document("get-books"));
@@ -142,7 +141,7 @@ class BookRestControllerIntegrationTest {
     @Test
     @DisplayName("in getting a single book")
     void getSingleBook() throws Exception {
-      mvc.perform(get("/books/{bookIdentifier}", DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER))
+      mvc.perform(get("/books/{bookIdentifier}", DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER).with(user("user")))
           .andExpect(status().isOk())
           .andExpect(
               jsonPath("$.identifier").value(DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER.toString()))
@@ -153,7 +152,7 @@ class BookRestControllerIntegrationTest {
     @Test
     @DisplayName("in deleting a book")
     void deleteSingleBook() throws Exception {
-      mvc.perform(delete("/books/{bookIdentifier}", DataInitializer.BOOK_CLOUD_NATIVE_IDENTIFIER))
+      mvc.perform(delete("/books/{bookIdentifier}", DataInitializer.BOOK_CLOUD_NATIVE_IDENTIFIER).with(csrf()).with(user("user")))
           .andExpect(status().isNoContent())
           .andDo(document("delete-book"));
     }
@@ -172,7 +171,7 @@ class BookRestControllerIntegrationTest {
       mvc.perform(
               post("/books")
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
@@ -187,7 +186,7 @@ class BookRestControllerIntegrationTest {
       mvc.perform(
               put("/books/{bookIdentifier}", DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
@@ -202,7 +201,7 @@ class BookRestControllerIntegrationTest {
       mvc.perform(
               put("/books/{bookIdentifier}", UUID.randomUUID())
                   .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(model)))
+                  .content(objectMapper.writeValueAsString(model)).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -214,8 +213,7 @@ class BookRestControllerIntegrationTest {
                       "/books/{bookIdentifier}/borrow/{userIdentifier}",
                       UUID.randomUUID(),
                       DataInitializer.BANNER_USER_IDENTIFIER)
-                  .with(csrf())
-                  .contentType(MediaType.APPLICATION_JSON))
+                  .contentType(MediaType.APPLICATION_JSON).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -227,7 +225,7 @@ class BookRestControllerIntegrationTest {
                       "/books/{bookIdentifier}/borrow/{userIdentifier}",
                       DataInitializer.BOOK_SPRING_ACTION_IDENTIFIER,
                       UUID.randomUUID())
-                  .contentType(MediaType.APPLICATION_JSON))
+                  .contentType(MediaType.APPLICATION_JSON).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -239,7 +237,7 @@ class BookRestControllerIntegrationTest {
                       "/books/{bookIdentifier}/return/{userIdentifier}",
                       UUID.randomUUID(),
                       DataInitializer.WAYNE_USER_IDENTIFIER)
-                  .contentType(MediaType.APPLICATION_JSON))
+                  .contentType(MediaType.APPLICATION_JSON).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -251,22 +249,160 @@ class BookRestControllerIntegrationTest {
                       "/books/{bookIdentifier}/return/{userIdentifier}",
                       DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER,
                       UUID.randomUUID())
-                  .contentType(MediaType.APPLICATION_JSON))
+                  .contentType(MediaType.APPLICATION_JSON).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
     }
 
     @Test
     @DisplayName("in getting an unknown book")
     void getSingleBook() throws Exception {
-      mvc.perform(get("/books/{bookIdentifier}", UUID.randomUUID()))
+      mvc.perform(get("/books/{bookIdentifier}", UUID.randomUUID()).with(user("user")))
           .andExpect(status().isNotFound());
     }
 
     @Test
     @DisplayName("in deleting an unknown book")
     void deleteSingleBook() throws Exception {
-      mvc.perform(delete("/books/{bookIdentifier}", UUID.randomUUID()))
+      mvc.perform(delete("/books/{bookIdentifier}", UUID.randomUUID()).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
+    }
+  }
+
+  @DisplayName("fails with unauthorized")
+  @Nested
+  class AuthenticationTests {
+
+    @Test
+    @DisplayName("in creating a book")
+    void createBookUnauthorized() throws Exception {
+
+      BookModel model =
+              new BookModel("1234567890123", "title", "description", Collections.singleton("author"));
+      mvc.perform(
+              post("/books")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+
+
+
+    @Test
+    @DisplayName("in updating a book")
+    void updateBookUnauthorized() throws Exception {
+      BookModel model =
+              new BookModel("1234567890123", "title", "description", Collections.singleton("author"));
+      mvc.perform(
+              put("/books/{bookIdentifier}", DataInitializer.BOOK_DEVOPS_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in borrowing a book")
+    void borrowBookUnauthorized() throws Exception {
+      mvc.perform(
+              post(
+                      "/books/{bookIdentifier}/borrow/{userIdentifier}",
+                      DataInitializer.BOOK_SPRING_ACTION_IDENTIFIER,
+                      DataInitializer.BANNER_USER_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in returning a book")
+    void returnBookUnauthorized() throws Exception {
+      mvc.perform(
+              post(
+                      "/books/{bookIdentifier}/return/{userIdentifier}",
+                      DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER,
+                      DataInitializer.WAYNE_USER_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in getting a list of all books")
+    void listAllBooksUnauthorized() throws Exception {
+      mvc.perform(get("/books"))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in getting a single book")
+    void getSingleBookUnauthorized() throws Exception {
+      mvc.perform(get("/books/{bookIdentifier}", DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER))
+              .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("in deleting a book")
+    void deleteSingleBookUnauthorized() throws Exception {
+      mvc.perform(delete("/books/{bookIdentifier}", DataInitializer.BOOK_CLOUD_NATIVE_IDENTIFIER).with(csrf()))
+              .andExpect(status().isUnauthorized());
+    }
+  }
+
+  @DisplayName("fails for missing CSRF token")
+  @Nested
+  class CsrfTokenTests {
+
+    @Test
+    @DisplayName("in creating a book")
+    void createBookNoCsrfToken() throws Exception {
+
+      BookModel model =
+              new BookModel("1234567890123", "title", "description", Collections.singleton("author"));
+      mvc.perform(
+              post("/books")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(user("user")))
+              .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("in updating a book")
+    void updateBookNoCsrfToken() throws Exception {
+      BookModel model =
+              new BookModel("1234567890123", "title", "description", Collections.singleton("author"));
+      mvc.perform(
+              put("/books/{bookIdentifier}", DataInitializer.BOOK_DEVOPS_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(model)).with(user("user")))
+              .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("in borrowing a book")
+    void borrowBookNoCsrfToken() throws Exception {
+      mvc.perform(
+              post(
+                      "/books/{bookIdentifier}/borrow/{userIdentifier}",
+                      DataInitializer.BOOK_SPRING_ACTION_IDENTIFIER,
+                      DataInitializer.BANNER_USER_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON).with(user("user")))
+              .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("in returning a book")
+    void returnBookNoCsrfToken() throws Exception {
+      mvc.perform(
+              post(
+                      "/books/{bookIdentifier}/return/{userIdentifier}",
+                      DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER,
+                      DataInitializer.WAYNE_USER_IDENTIFIER)
+                      .contentType(MediaType.APPLICATION_JSON).with(user("user")))
+              .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("in deleting a book")
+    void deleteSingleBookNoCsrfToken() throws Exception {
+      mvc.perform(delete("/books/{bookIdentifier}", DataInitializer.BOOK_CLOUD_NATIVE_IDENTIFIER).with(user("user")))
+              .andExpect(status().isForbidden());
     }
   }
 }

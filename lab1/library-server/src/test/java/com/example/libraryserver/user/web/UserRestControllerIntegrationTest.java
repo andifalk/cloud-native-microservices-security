@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = MOCK)
 @DirtiesContext
 @ActiveProfiles("test")
-@DisplayName("Verify user rest api")
+@DisplayName("Calling user rest api")
 class UserRestControllerIntegrationTest {
 
   @Autowired private WebApplicationContext context;
@@ -70,8 +70,8 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in registering a new user")
     void registerUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans", "Mustermann", "test@example.com", "password", Collections.singleton("USER"));
       mvc.perform(
               post("/users")
@@ -86,8 +86,8 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in updating an existing user")
     void updateUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans",
               "Mustermann",
               "test@example.com",
@@ -138,8 +138,8 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in registering a new user with invalid email")
     void registerUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans", "Mustermann", "example.com", "password", Collections.singleton("USER"));
       mvc.perform(
               post("/users")
@@ -149,14 +149,14 @@ class UserRestControllerIntegrationTest {
           .andExpect(
               content()
                   .string(
-                      startsWith("Field error in object \\'userModel\\' on field \\'email\\'")));
+                      startsWith("Field error in object \\'createUserModel\\' on field \\'email\\'")));
     }
 
     @Test
     @DisplayName("in updating an existing user with invalid email")
     void updateUser() throws Exception {
-      UserModel model =
-          new UserModel(
+      CreateUserModel model =
+          new CreateUserModel(
               "Hans",
               "Mustermann",
               "example.com",
@@ -170,7 +170,7 @@ class UserRestControllerIntegrationTest {
           .andExpect(
               content()
                   .string(
-                      startsWith("Field error in object \\'userModel\\' on field \\'email\\'")));
+                      startsWith("Field error in object \\'createUserModel\\' on field \\'email\\'")));
     }
 
     @Test

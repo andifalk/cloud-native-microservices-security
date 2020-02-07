@@ -38,15 +38,15 @@ public class UserRestController {
 
   @PostMapping
   public ResponseEntity<UserModel> registerUser(
-      @RequestBody @Valid UserModel userModel, HttpServletRequest request) {
+      @RequestBody @Valid CreateUserModel createUserModel, HttpServletRequest request) {
     User user =
         userService.save(
             new User(
-                userModel.getFirstName(),
-                userModel.getLastName(),
-                userModel.getEmail(),
-                userModel.getPassword(),
-                userModel.getRoles()));
+                createUserModel.getFirstName(),
+                createUserModel.getLastName(),
+                createUserModel.getEmail(),
+                createUserModel.getPassword(),
+                createUserModel.getRoles()));
     URI uri =
         ServletUriComponentsBuilder.fromServletMapping(request)
             .path("/users/" + user.getIdentifier())
@@ -59,17 +59,17 @@ public class UserRestController {
   @PutMapping("/{userIdentifier}")
   public ResponseEntity<UserModel> updateUser(
       @PathVariable("userIdentifier") UUID userIdentifier,
-      @RequestBody @Valid UserModel userModel) {
+      @RequestBody @Valid CreateUserModel createUserModel) {
 
     return userService
         .findOneByIdentifier(userIdentifier)
         .map(
             u -> {
-              u.setFirstName(userModel.getFirstName());
-              u.setLastName(userModel.getLastName());
-              u.setEmail(userModel.getEmail());
-              u.setPassword(userModel.getPassword());
-              u.setRoles(userModel.getRoles());
+              u.setFirstName(createUserModel.getFirstName());
+              u.setLastName(createUserModel.getLastName());
+              u.setEmail(createUserModel.getEmail());
+              u.setPassword(createUserModel.getPassword());
+              u.setRoles(createUserModel.getRoles());
               return ResponseEntity.ok(userModelAssembler.toModel(userService.save(u)));
             })
         .orElse(ResponseEntity.notFound().build());

@@ -56,6 +56,7 @@ public class WebSecurityConfiguration {
                       .authenticated()
                       .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                       .permitAll()
+                      .mvcMatchers("/").permitAll()
                       .anyRequest()
                       .authenticated())
           .httpBasic(withDefaults())

@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = MOCK)
 @DirtiesContext
 @ActiveProfiles("test")
-@DisplayName("Verify book rest api")
+@DisplayName("Calling book rest api")
 class BookRestControllerIntegrationTest {
 
   @Autowired private WebApplicationContext context;

@@ -28,7 +28,6 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPassword(),
                 user.getRoles()));
     userModel.add(
         linkTo(methodOn(UserRestController.class).getSingleUser(userModel.getIdentifier()))
@@ -54,7 +53,6 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
     output.setEmail(Encode.forJavaScript(Encode.forHtml(input.getEmail())));
     output.setFirstName(Encode.forJavaScript(Encode.forHtml(input.getFirstName())));
     output.setLastName(Encode.forJavaScript(Encode.forHtml(input.getLastName())));
-    output.setPassword(input.getPassword());
     output.setIdentifier(input.getIdentifier());
     for (String role : input.getRoles()) {
       output.getRoles().add(Encode.forJavaScript(Encode.forHtml(role)));
