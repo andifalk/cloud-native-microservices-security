@@ -44,8 +44,7 @@ class LibraryUserDetailsServiceTest {
   void loadUserByUsernameNotFound() {
     given(userService.findOneByEmail(any())).willReturn(Optional.empty());
     assertThatExceptionOfType(UsernameNotFoundException.class)
-        .isThrownBy(
-            () -> cut.loadUserByUsername("test@example.com"))
+        .isThrownBy(() -> cut.loadUserByUsername("test@example.com"))
         .withMessage("No user found for test@example.com")
         .withNoCause();
   }
@@ -80,8 +79,7 @@ class LibraryUserDetailsServiceTest {
 
     given(userService.findOneByEmail(any())).willReturn(Optional.empty());
     assertThatExceptionOfType(UsernameNotFoundException.class)
-        .isThrownBy(
-            () -> cut.updatePassword(userDetails, "newpassword"))
+        .isThrownBy(() -> cut.updatePassword(userDetails, "newpassword"))
         .withMessage("No user found for test@example.com")
         .withNoCause();
   }

@@ -34,7 +34,11 @@ public class LibraryUserDetailsService implements UserDetailsService, UserDetail
         .findOneByEmail(user.getUsername())
         .map(
             u -> {
-              LOGGER.info("Upgrading password {} for user {} to {}", user.getPassword(), user.getUsername(), newPassword);
+              LOGGER.info(
+                  "Upgrading password {} for user {} to {}",
+                  user.getPassword(),
+                  user.getUsername(),
+                  newPassword);
               u.setPassword(newPassword);
               return new AuthenticatedUser(userService.save(u));
             })

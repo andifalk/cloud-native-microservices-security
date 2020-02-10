@@ -11,5 +11,4 @@ public class PasswordValidationConfiguration {
   public PasswordValidationService passwordValidationService() {
     return new PasswordValidationService();
   }
-
 }

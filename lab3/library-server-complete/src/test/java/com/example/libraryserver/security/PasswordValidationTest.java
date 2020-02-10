@@ -65,10 +65,11 @@ public class PasswordValidationTest {
   void verifyInvalidPasswordTooLong() {
 
     InvalidPasswordError error =
-            catchThrowableOfType(
-                    () -> passwordValidationService.validate(
-                            "user", "my!Sec4testedfrewasdefvbnhjlkilomngthfargtwbnhjlmnhsömnöämnhjqpolwk"),
-                    InvalidPasswordError.class);
+        catchThrowableOfType(
+            () ->
+                passwordValidationService.validate(
+                    "user", "my!Sec4testedfrewasdefvbnhjlkilomngthfargtwbnhjlmnhsömnöämnhjqpolwk"),
+            InvalidPasswordError.class);
 
     assertThat(error).isNotNull();
     List<String> messages = error.getValidationErrors();
@@ -81,12 +82,11 @@ public class PasswordValidationTest {
   void verifyInvalidPasswordTooManyRepeatingChars() {
 
     InvalidPasswordError error =
-            catchThrowableOfType(
-                    () -> passwordValidationService.validate("user", "my!Sec4teeeest"),
-                    InvalidPasswordError.class);
+        catchThrowableOfType(
+            () -> passwordValidationService.validate("user", "my!Sec4teeeest"),
+            InvalidPasswordError.class);
 
     assertThat(error).isNotNull();
-
 
     List<String> messages = error.getValidationErrors();
     assertThat(messages.size()).isEqualTo(1);
@@ -98,9 +98,9 @@ public class PasswordValidationTest {
   void verifyInvalidPasswordUsernameInPassword() {
 
     InvalidPasswordError error =
-            catchThrowableOfType(
-                    () -> passwordValidationService.validate("user", "my!Secret4tuser"),
-                    InvalidPasswordError.class);
+        catchThrowableOfType(
+            () -> passwordValidationService.validate("user", "my!Secret4tuser"),
+            InvalidPasswordError.class);
 
     assertThat(error).isNotNull();
 
@@ -114,9 +114,9 @@ public class PasswordValidationTest {
   void verifyInvalidPasswordMultipleErrors() {
 
     InvalidPasswordError error =
-            catchThrowableOfType(
-                    () -> passwordValidationService.validate("user", "qwertyuser"),
-                    InvalidPasswordError.class);
+        catchThrowableOfType(
+            () -> passwordValidationService.validate("user", "qwertyuser"),
+            InvalidPasswordError.class);
 
     assertThat(error).isNotNull();
 

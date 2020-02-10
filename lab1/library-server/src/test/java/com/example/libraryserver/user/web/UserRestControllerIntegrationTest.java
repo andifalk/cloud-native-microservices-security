@@ -45,11 +45,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Calling user rest api")
 class UserRestControllerIntegrationTest {
 
-  @Autowired private WebApplicationContext context;
-
-  private MockMvc mvc;
-
   private final ObjectMapper objectMapper = new ObjectMapper();
+  @Autowired private WebApplicationContext context;
+  private MockMvc mvc;
 
   @BeforeEach
   void setup(RestDocumentationContextProvider restDocumentationContextProvider) {
@@ -149,7 +147,8 @@ class UserRestControllerIntegrationTest {
           .andExpect(
               content()
                   .string(
-                      startsWith("Field error in object \\'createUserModel\\' on field \\'email\\'")));
+                      startsWith(
+                          "Field error in object \\'createUserModel\\' on field \\'email\\'")));
     }
 
     @Test
@@ -170,7 +169,8 @@ class UserRestControllerIntegrationTest {
           .andExpect(
               content()
                   .string(
-                      startsWith("Field error in object \\'createUserModel\\' on field \\'email\\'")));
+                      startsWith(
+                          "Field error in object \\'createUserModel\\' on field \\'email\\'")));
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.example.libraryserver.user.data.UserRepository;
 import org.owasp.security.logging.SecurityMarkers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.IdGenerator;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@PreAuthorize("hasRole('LIBRARY_ADMIN')")
 @Transactional(readOnly = true)
 public class UserService {
 
@@ -31,6 +33,7 @@ public class UserService {
     return userRepository.findOneByIdentifier(identifier);
   }
 
+  @PreAuthorize("isAnonymous() || isAuthenticated()")
   public Optional<User> findOneByEmail(String email) {
     return userRepository.findOneByEmail(email);
   }

@@ -88,16 +88,14 @@ class ActuatorIntegrationTest {
     @DisplayName("for env endpoint when user is not authenticated")
     void env() throws Exception {
 
-      mvc.perform(get("/actuator/env"))
-              .andExpect(status().isUnauthorized());
+      mvc.perform(get("/actuator/env")).andExpect(status().isUnauthorized());
     }
 
     @Test
     @DisplayName("for metrics endpoint when user is not authenticated")
     void metrics() throws Exception {
 
-      mvc.perform(get("/actuator/metrics"))
-              .andExpect(status().isUnauthorized());
+      mvc.perform(get("/actuator/metrics")).andExpect(status().isUnauthorized());
     }
   }
 }

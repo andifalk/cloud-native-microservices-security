@@ -37,10 +37,10 @@ public class BookModelAssembler extends RepresentationModelAssemblerSupport<Book
         linkTo(methodOn(BookRestController.class).getSingleBook(bookModel.getIdentifier()))
             .withSelfRel());
     bookModel.add(
-        linkTo(methodOn(BookRestController.class).borrowBook(bookModel.getIdentifier(), null))
+        linkTo(methodOn(BookRestController.class).borrowBook(bookModel.getIdentifier(), null, null))
             .withRel("borrow"));
     bookModel.add(
-        linkTo(methodOn(BookRestController.class).returnBook(bookModel.getIdentifier(), null))
+        linkTo(methodOn(BookRestController.class).returnBook(bookModel.getIdentifier(), null, null))
             .withRel("return"));
 
     return bookModel;

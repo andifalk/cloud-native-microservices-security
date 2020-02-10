@@ -27,17 +27,12 @@ public class UserModel extends RepresentationModel<UserModel> {
 
   public UserModel() {}
 
-  public UserModel(
-      String firstName, String lastName, String email, Set<String> roles) {
+  public UserModel(String firstName, String lastName, String email, Set<String> roles) {
     this(null, firstName, lastName, email, roles);
   }
 
   public UserModel(
-      UUID identifier,
-      String firstName,
-      String lastName,
-      String email,
-      Set<String> roles) {
+      UUID identifier, String firstName, String lastName, String email, Set<String> roles) {
     this.identifier = identifier;
     this.firstName = firstName;
     this.lastName = lastName;

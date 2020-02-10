@@ -2,8 +2,10 @@ package com.example.libraryserver.book.web;
 
 import com.example.libraryserver.book.data.Book;
 import com.example.libraryserver.book.service.BookService;
+import com.example.libraryserver.security.AuthenticatedUser;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,10 +77,11 @@ public class BookRestController {
   @PostMapping("/{bookIdentifier}/borrow/{userIdentifier}")
   public ResponseEntity<BookModel> borrowBook(
       @PathVariable("bookIdentifier") UUID bookIdentifier,
-      @PathVariable("userIdentifier") UUID userIdentifier) {
+      @PathVariable("userIdentifier") UUID userIdentifier,
+      @AuthenticationPrincipal AuthenticatedUser authenticatedUser) {
 
     return bookService
-        .borrowForUser(bookIdentifier, userIdentifier)
+        .borrowForUser(bookIdentifier, userIdentifier, authenticatedUser)
         .map(b -> ResponseEntity.ok(bookModelAssembler.toModel(b)))
         .orElse(ResponseEntity.notFound().build());
   }
@@ -86,10 +89,11 @@ public class BookRestController {
   @PostMapping("/{bookIdentifier}/return/{userIdentifier}")
   public ResponseEntity<BookModel> returnBook(
       @PathVariable("bookIdentifier") UUID bookIdentifier,
-      @PathVariable("userIdentifier") UUID userIdentifier) {
+      @PathVariable("userIdentifier") UUID userIdentifier,
+      @AuthenticationPrincipal AuthenticatedUser authenticatedUser) {
 
     return bookService
-        .returnForUser(bookIdentifier, userIdentifier)
+        .returnForUser(bookIdentifier, userIdentifier, authenticatedUser)
         .map(b -> ResponseEntity.ok(bookModelAssembler.toModel(b)))
         .orElse(ResponseEntity.notFound().build());
   }

@@ -2,6 +2,7 @@ package com.example.libraryserver.book.service;
 
 import com.example.libraryserver.book.data.Book;
 import com.example.libraryserver.book.data.BookRepository;
+import com.example.libraryserver.security.AuthenticatedUser;
 import com.example.libraryserver.user.data.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +52,8 @@ public class BookService {
   }
 
   @Transactional
-  public Optional<Book> borrowForUser(UUID bookIdentifier, UUID userIdentifier) {
+  public Optional<Book> borrowForUser(
+      UUID bookIdentifier, UUID userIdentifier, AuthenticatedUser authenticatedUser) {
     LOGGER.trace(
         "borrow book with identifier {} for user with identifier {}",
         bookIdentifier,
@@ -59,7 +61,11 @@ public class BookService {
 
     return bookRepository
         .findOneByIdentifier(bookIdentifier)
-        .filter(b -> b.getBorrowedByUser() == null)
+        .filter(
+            b ->
+                b.getBorrowedByUser() == null
+                    && authenticatedUser != null
+                    && userIdentifier.equals(authenticatedUser.getIdentifier()))
         .flatMap(
             b ->
                 userRepository
@@ -75,7 +81,8 @@ public class BookService {
   }
 
   @Transactional
-  public Optional<Book> returnForUser(UUID bookIdentifier, UUID userIdentifier) {
+  public Optional<Book> returnForUser(
+      UUID bookIdentifier, UUID userIdentifier, AuthenticatedUser authenticatedUser) {
     LOGGER.trace(
         "return book with identifier {} of user with identifier {}",
         bookIdentifier,
@@ -86,7 +93,11 @@ public class BookService {
         .filter(
             b ->
                 b.getBorrowedByUser() != null
-                    && b.getBorrowedByUser().getIdentifier().equals(userIdentifier))
+                    && authenticatedUser != null
+                    && b.getBorrowedByUser().getIdentifier().equals(userIdentifier)
+                    && b.getBorrowedByUser()
+                        .getIdentifier()
+                        .equals(authenticatedUser.getIdentifier()))
         .flatMap(
             b ->
                 userRepository

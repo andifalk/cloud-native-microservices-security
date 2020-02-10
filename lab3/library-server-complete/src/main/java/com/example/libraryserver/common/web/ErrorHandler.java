@@ -29,7 +29,7 @@ public class ErrorHandler {
   public ResponseEntity<String> handle(InvalidPasswordError ex) {
     LOGGER.warn(ex.getMessage());
     return ResponseEntity.badRequest()
-            .body(Encode.forJavaScriptSource(Encode.forHtmlContent(ex.getMessage())));
+        .body(Encode.forJavaScriptSource(Encode.forHtmlContent(ex.getMessage())));
   }
 
   @ExceptionHandler(RuntimeException.class)

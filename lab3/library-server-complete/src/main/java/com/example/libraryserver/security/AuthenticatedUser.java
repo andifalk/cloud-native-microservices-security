@@ -10,7 +10,13 @@ import java.util.Collection;
 public class AuthenticatedUser extends User implements UserDetails {
 
   public AuthenticatedUser(User user) {
-    super(user.getIdentifier(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getRoles());
+    super(
+        user.getIdentifier(),
+        user.getFirstName(),
+        user.getLastName(),
+        user.getEmail(),
+        user.getPassword(),
+        user.getRoles());
   }
 
   @Override

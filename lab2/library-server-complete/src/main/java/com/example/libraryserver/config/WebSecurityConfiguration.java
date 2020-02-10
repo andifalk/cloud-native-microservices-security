@@ -46,7 +46,7 @@ public class WebSecurityConfiguration {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      //http.csrf().disable();
+      // http.csrf().disable();
       http.authorizeRequests(
               authorizeRequests ->
                   authorizeRequests
@@ -56,7 +56,8 @@ public class WebSecurityConfiguration {
                       .authenticated()
                       .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                       .permitAll()
-                      .mvcMatchers("/").permitAll()
+                      .mvcMatchers("/")
+                      .permitAll()
                       .anyRequest()
                       .authenticated())
           .httpBasic(withDefaults())

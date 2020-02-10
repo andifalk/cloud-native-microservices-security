@@ -33,7 +33,10 @@ public class UserRestController {
   private final PasswordValidationService passwordValidationService;
   private final UserModelAssembler userModelAssembler;
 
-  public UserRestController(UserService userService, PasswordValidationService passwordValidationService, UserModelAssembler userModelAssembler) {
+  public UserRestController(
+      UserService userService,
+      PasswordValidationService passwordValidationService,
+      UserModelAssembler userModelAssembler) {
     this.userService = userService;
     this.passwordValidationService = passwordValidationService;
     this.userModelAssembler = userModelAssembler;
@@ -72,7 +75,8 @@ public class UserRestController {
         .map(
             u -> {
               if (!u.getPassword().equals(createUserModel.getPassword())) {
-                passwordValidationService.validate(createUserModel.getEmail(), createUserModel.getPassword());
+                passwordValidationService.validate(
+                    createUserModel.getEmail(), createUserModel.getPassword());
               }
               u.setFirstName(createUserModel.getFirstName());
               u.setLastName(createUserModel.getLastName());

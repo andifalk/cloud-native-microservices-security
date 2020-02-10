@@ -48,11 +48,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Calling book rest api")
 class BookRestControllerIntegrationTest {
 
-  @Autowired private WebApplicationContext context;
-
-  private MockMvc mvc;
-
   private final ObjectMapper objectMapper = new ObjectMapper();
+  @Autowired private WebApplicationContext context;
+  private MockMvc mvc;
 
   @BeforeEach
   void setup(RestDocumentationContextProvider restDocumentationContextProvider) {

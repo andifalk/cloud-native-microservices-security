@@ -27,8 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Password policy validator.
- * Uses recommendations from https://pages.nist.gov/800-63-3/sp800-63b.html (section 5.1.1.2 Memorized Secret Verifiers)
+ * Password policy validator. Uses recommendations from
+ * https://pages.nist.gov/800-63-3/sp800-63b.html (section 5.1.1.2 Memorized Secret Verifiers)
  */
 public class PasswordValidationService {
 
@@ -45,15 +45,21 @@ public class PasswordValidationService {
     WordList wordList;
     try {
       ClassPathResource resource = new ClassPathResource(PASSWORD_LIST_TXT);
-      wordList = WordLists.createFromReader(
-              new FileReader[] {new FileReader(resource.getFile())},
+      wordList =
+          WordLists.createFromReader(
+              new FileReader[] {new FileReader(resource.getFile())}, false, new ArraysSort());
+      LOGGER.info(
+          "Successfully loaded the password list from {} with size {}",
+          resource.getURL(),
+          wordList.size());
+    } catch (IOException ex) {
+      wordList =
+          new ArrayWordList(
+              new String[] {
+                "password", "Password", "123456", "12345678", "admin", "geheim", "secret"
+              },
               false,
               new ArraysSort());
-      LOGGER.info("Successfully loaded the password list from {} with size {}", resource.getURL(), wordList.size());
-    } catch (IOException ex) {
-      wordList = new ArrayWordList(
-              new String[] {"password", "Password", "123456", "12345678", "admin", "geheim", "secret"},
-              false, new ArraysSort());
       LOGGER.warn("Error loading the password list: {}", ex.getMessage());
     }
 
@@ -66,13 +72,15 @@ public class PasswordValidationService {
     characteristicsRule.getRules().add(new CharacterRule(EnglishCharacterData.Digit, 1));
     characteristicsRule.getRules().add(new CharacterRule(EnglishCharacterData.Special, 1));
 
-    this.passwordValidator= new PasswordValidator(Arrays.asList(
-            new LengthRule(12, 64),
-            characteristicsRule,
-            new RepeatCharacterRegexRule(4),
-            new UsernameRule(),
-            new WhitespaceRule(),
-            new DictionarySubstringRule(new WordListDictionary(wordList))));
+    this.passwordValidator =
+        new PasswordValidator(
+            Arrays.asList(
+                new LengthRule(12, 64),
+                characteristicsRule,
+                new RepeatCharacterRegexRule(4),
+                new UsernameRule(),
+                new WhitespaceRule(),
+                new DictionarySubstringRule(new WordListDictionary(wordList))));
   }
 
   public void validate(String username, String password) {
