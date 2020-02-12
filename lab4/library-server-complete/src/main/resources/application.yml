@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: library-server
+  jpa:
+    open-in-view: false
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: 9090
+  servlet:
+    context-path: /library
+  error:
+    include-stacktrace: never
+
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+info:
+  application:
+    name: library-server
+    version: 1.0.0
+
+logging:
+  level:
+    org.springframework.security: info
