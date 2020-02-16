@@ -13,7 +13,7 @@
 * [Postman](https://www.getpostman.com/downloads), [Httpie](https://httpie.org/#installation), or [Curl](https://curl.haxx.se/download.html) for REST calls
 
 In case you select [Postman](https://www.getpostman.com/downloads), then the provided [Postman Collection](oidc_workshop.postman_collection.json) might be helpful.
-Just import this [Postman Collection (Version 2.1 format)](oidc_workshop.postman_collection.json) into Postman.
+Just import this [Postman Collection (Version 2.1 format)](../postman/library-server/Library-Server.postman_collection.json) into Postman.
 
 ### IntelliJ specific requirements
 
@@ -41,10 +41,10 @@ To be able to work properly in Visual Studio Code with this Spring Boot Java Gra
 
 ## Get the source code
                        
-Clone this GitHub repository (https://github.com/andifalk/secure-oauth2-oidc-workshop):
+Clone this GitHub repository (https://github.com/andifalk/cloud-native-microservices-security):
 
 ```
-git clone https://github.com/andifalk/secure-oauth2-oidc-workshop.git oidc_workshop
+git clone https://github.com/andifalk/cloud-native-microservices-security.git security_workshop
 ```
 
 After that you can import the whole workshop project directory into your IDE as a __gradle project__:
