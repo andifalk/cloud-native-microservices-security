@@ -1,63 +1,23 @@
 ![](https://github.com/andifalk/cloud-native-microservices-security/workflows/Java%20CI/badge.svg)
 
-# Cloud-Native Microservice Security Bootcamp
+# Cloud-Native Microservice Security Boot-Camp
 
 [Tutorial](https://andifalk.gitbook.io/cloud-native-microservices-security)
 
-## Day 1: Basic Security + Kubernetes Security
+## Introduction
 
-### Security in Software Development Lifecycle
+* [Requirements and Setup](setup/README.md)  
 
-### OWASP Top 10 (Web Application Security Risks)
+## Hands-On Labs
+     
+* [1.Security via Spring Boot Auto-Configuration](lab1)    
+* [2.Customized Authentication](lab2)
+* [3.Mutual TLS (MTLS)](lab3)
+* [4.Authorization](lab4)
+* [5.Automated Testing](lab5)
+* [6.Kubernetes Security](lab6)
 
-### Spring Boot & Spring Security
+## Bonus Labs
 
-#### Security response headers
-
-#### Defense against SQL injection, XSS, and CSRF
-
-### Authentication
-
-* Basic Auth
-* Form Login
-* Encryption and password hashing 
-* MTLS
-* WebAuthn
-
-### Authorization
-
-* Static Roles
-* Dynamic Permissions
-
-### Automated security tests
-
-## Container- and Kubernetes Security
-
-## OWASP Docker Top 10
-
-### Secure Docker Container Images
-
-### RBAC
-
-### Pod Security Context
-
-### Pod Security Policies
-
-### Tools
-
-
-# Day 2: Token-based Auth & Authz + Micronaut
-
-## OAuth 2.0 and OpenID Connect
-
-### Introduction
-
-### Identity Provider
-
-### Server Side (Resource Server)
-
-### Client Side
-
-### Testing
-
-## Securing Micronaut applications
+* [Web Authn](bonus-labs/webauthn/README.md)
+* [Micronaut](bonus-labs/micronaut/README.md)

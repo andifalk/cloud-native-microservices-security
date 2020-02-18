@@ -56,7 +56,7 @@ class ActuatorIntegrationTest {
     @DisplayName("for health endpoint details with authentication")
     void healthWithAuth() throws Exception {
 
-      mvc.perform(get("/actuator/health").with(user("user").roles("LIBRARY_ACTUATOR")))
+      mvc.perform(get("/actuator/health").with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.status").value("UP"))
           .andExpect(jsonPath("$.components").exists());
@@ -75,7 +75,7 @@ class ActuatorIntegrationTest {
     @DisplayName("for env endpoint")
     void env() throws Exception {
 
-      mvc.perform(get("/actuator/env").with(user("user").roles("LIBRARY_ACTUATOR")))
+      mvc.perform(get("/actuator/env").with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.propertySources.length()").value(greaterThan(0)));
     }
@@ -84,7 +84,7 @@ class ActuatorIntegrationTest {
     @DisplayName("for metrics endpoint")
     void metrics() throws Exception {
 
-      mvc.perform(get("/actuator/metrics").with(user("user").roles("LIBRARY_ACTUATOR")))
+      mvc.perform(get("/actuator/metrics").with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.names").exists());
     }

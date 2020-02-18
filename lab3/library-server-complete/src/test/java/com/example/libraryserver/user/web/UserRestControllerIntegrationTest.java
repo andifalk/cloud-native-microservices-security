@@ -84,7 +84,7 @@ class UserRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isCreated())
           .andExpect(header().exists("location"))
           .andExpect(jsonPath("$.identifier").exists())
@@ -106,7 +106,7 @@ class UserRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.lastName").value("Mustermann"))
           .andDo(document("update-user"));
@@ -115,7 +115,7 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in getting a list of all users")
     void listAllUsers() throws Exception {
-      mvc.perform(get("/users").with(user("user").roles("LIBRARY_ADMIN")))
+      mvc.perform(get("/users").with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.users.length()").value(greaterThan(0)))
           .andDo(document("get-users"));
@@ -126,7 +126,7 @@ class UserRestControllerIntegrationTest {
     void getSingleUser() throws Exception {
       mvc.perform(
               get("/users/{userIdentifier}", DataInitializer.WAYNE_USER_IDENTIFIER)
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isOk())
           .andExpect(
               jsonPath("$.identifier").value(DataInitializer.WAYNE_USER_IDENTIFIER.toString()))
@@ -140,7 +140,7 @@ class UserRestControllerIntegrationTest {
       mvc.perform(
               delete("/users/{userIdentifier}", DataInitializer.CURATOR_IDENTIFIER)
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isNoContent())
           .andDo(document("delete-user"));
     }
@@ -161,7 +161,7 @@ class UserRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
@@ -185,7 +185,7 @@ class UserRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
@@ -197,9 +197,7 @@ class UserRestControllerIntegrationTest {
     @Test
     @DisplayName("in getting an unknown user")
     void getSingleUser() throws Exception {
-      mvc.perform(
-              get("/users/{userIdentifier}", UUID.randomUUID())
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+      mvc.perform(get("/users/{userIdentifier}", UUID.randomUUID()).with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -207,9 +205,7 @@ class UserRestControllerIntegrationTest {
     @DisplayName("in deleting an unknown user")
     void deleteUser() throws Exception {
       mvc.perform(
-              delete("/users/{userIdentifier}", UUID.randomUUID())
-                  .with(csrf())
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+              delete("/users/{userIdentifier}", UUID.randomUUID()).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
     }
   }
@@ -294,7 +290,7 @@ class UserRestControllerIntegrationTest {
               post("/users")
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
 
@@ -312,7 +308,7 @@ class UserRestControllerIntegrationTest {
               put("/users/{userIdentifier}", DataInitializer.ADMIN_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
 
@@ -321,7 +317,7 @@ class UserRestControllerIntegrationTest {
     void deleteUserNoCsrfToken() throws Exception {
       mvc.perform(
               delete("/users/{userIdentifier}", DataInitializer.CURATOR_IDENTIFIER)
-                  .with(user("user").roles("LIBRARY_ADMIN")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
   }

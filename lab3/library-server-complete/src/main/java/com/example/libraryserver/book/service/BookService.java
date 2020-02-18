@@ -6,7 +6,6 @@ import com.example.libraryserver.security.AuthenticatedUser;
 import com.example.libraryserver.user.data.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.IdGenerator;
@@ -16,7 +15,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@PreAuthorize("isAuthenticated()")
 @Transactional(readOnly = true)
 public class BookService {
 
@@ -43,7 +41,6 @@ public class BookService {
     return bookRepository.findAll();
   }
 
-  @PreAuthorize("hasRole('LIBRARY_CURATOR')")
   @Transactional
   public Book save(Book book) {
     LOGGER.trace("Save book {}", book);
@@ -54,7 +51,6 @@ public class BookService {
     return bookRepository.save(book);
   }
 
-  @PreAuthorize("hasRole('LIBRARY_USER')")
   @Transactional
   public Optional<Book> borrowForUser(
       UUID bookIdentifier, UUID userIdentifier, AuthenticatedUser authenticatedUser) {
@@ -84,7 +80,6 @@ public class BookService {
                     .orElse(Optional.empty()));
   }
 
-  @PreAuthorize("hasRole('LIBRARY_USER')")
   @Transactional
   public Optional<Book> returnForUser(
       UUID bookIdentifier, UUID userIdentifier, AuthenticatedUser authenticatedUser) {
@@ -117,7 +112,6 @@ public class BookService {
                     .orElse(Optional.empty()));
   }
 
-  @PreAuthorize("hasRole('LIBRARY_CURATOR')")
   @Transactional
   public boolean deleteOneByIdentifier(UUID bookIdentifier) {
     LOGGER.trace("delete book with identifier {}", bookIdentifier);

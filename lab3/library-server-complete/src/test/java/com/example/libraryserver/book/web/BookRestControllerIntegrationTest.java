@@ -94,7 +94,7 @@ class BookRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isCreated())
           .andExpect(header().exists("location"))
           .andExpect(jsonPath("$.identifier").exists())
@@ -111,7 +111,7 @@ class BookRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.title").value("title"))
           .andDo(document("update-book"));
@@ -182,7 +182,7 @@ class BookRestControllerIntegrationTest {
       mvc.perform(
               delete("/books/{bookIdentifier}", DataInitializer.BOOK_CLOUD_NATIVE_IDENTIFIER)
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isNoContent())
           .andDo(document("delete-book"));
     }
@@ -203,7 +203,7 @@ class BookRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
@@ -220,7 +220,7 @@ class BookRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isBadRequest())
           .andExpect(
               content()
@@ -237,7 +237,7 @@ class BookRestControllerIntegrationTest {
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -251,7 +251,7 @@ class BookRestControllerIntegrationTest {
                       DataInitializer.BANNER_USER_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_USER")))
+                  .with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -265,7 +265,7 @@ class BookRestControllerIntegrationTest {
                       UUID.randomUUID())
                   .contentType(MediaType.APPLICATION_JSON)
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_USER")))
+                  .with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -279,7 +279,7 @@ class BookRestControllerIntegrationTest {
                       DataInitializer.WAYNE_USER_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_USER")))
+                  .with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -293,7 +293,7 @@ class BookRestControllerIntegrationTest {
                       UUID.randomUUID())
                   .contentType(MediaType.APPLICATION_JSON)
                   .with(csrf())
-                  .with(user("user").roles("LIBRARY_USER")))
+                  .with(user("user")))
           .andExpect(status().isNotFound());
     }
 
@@ -308,9 +308,7 @@ class BookRestControllerIntegrationTest {
     @DisplayName("in deleting an unknown book")
     void deleteSingleBook() throws Exception {
       mvc.perform(
-              delete("/books/{bookIdentifier}", UUID.randomUUID())
-                  .with(csrf())
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+              delete("/books/{bookIdentifier}", UUID.randomUUID()).with(csrf()).with(user("user")))
           .andExpect(status().isNotFound());
     }
   }
@@ -409,7 +407,7 @@ class BookRestControllerIntegrationTest {
               post("/books")
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
 
@@ -422,7 +420,7 @@ class BookRestControllerIntegrationTest {
               put("/books/{bookIdentifier}", DataInitializer.BOOK_DEVOPS_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
                   .content(objectMapper.writeValueAsString(model))
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
 
@@ -435,7 +433,7 @@ class BookRestControllerIntegrationTest {
                       DataInitializer.BOOK_SPRING_ACTION_IDENTIFIER,
                       DataInitializer.BANNER_USER_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
-                  .with(user("user").roles("LIBRARY_USER")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
 
@@ -448,7 +446,7 @@ class BookRestControllerIntegrationTest {
                       DataInitializer.BOOK_CLEAN_CODE_IDENTIFIER,
                       DataInitializer.WAYNE_USER_IDENTIFIER)
                   .contentType(MediaType.APPLICATION_JSON)
-                  .with(user("user").roles("LIBRARY_USER")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
 
@@ -457,7 +455,7 @@ class BookRestControllerIntegrationTest {
     void deleteSingleBookNoCsrfToken() throws Exception {
       mvc.perform(
               delete("/books/{bookIdentifier}", DataInitializer.BOOK_CLOUD_NATIVE_IDENTIFIER)
-                  .with(user("user").roles("LIBRARY_CURATOR")))
+                  .with(user("user")))
           .andExpect(status().isForbidden());
     }
   }

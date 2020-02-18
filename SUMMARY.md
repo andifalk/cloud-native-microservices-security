@@ -6,12 +6,14 @@
 
 ## Hands-On Labs
      
-* [Security via Spring Boot Auto-Configuration](lab1/README.md)    
-* [Customized Authentication](lab2/README.md)
-* [Authorization](lab3/README.md)
-* [Mutual TLS (MTLS)](lab4/README.md)
-* [Web Authn](lab5/README.md)
-* [Automated Testing](lab6/README.md)
-* [Kubernetes Security](lab7/README.md)
-    
+* [1.Security via Spring Boot Auto-Configuration](lab1/README.md)    
+* [2.Customized Authentication](lab2/README.md)
+* [3.Mutual TLS (MTLS)](lab3/README.md)
+* [4.Authorization](lab4/README.md)
+* [5.Automated Testing](lab5/README.md)
+* [6.Kubernetes Security](lab6/README.md)
 
+## Bonus Labs
+
+* [Web Authn](bonus-labs/webauthn/README.md)
+* [Micronaut](bonus-labs/micronaut/README.md)

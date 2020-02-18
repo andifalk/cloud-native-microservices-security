@@ -1,4 +1,4 @@
-# Lab 6: Automated Security Testing
+# Lab 6: Container & Kubernetes Security
 
 
 

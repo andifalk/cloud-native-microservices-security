@@ -1,5 +1,4 @@
-# Lab 5: WebAuthn
-
+# Lab 5: Automated Security Testing
 
 
 
