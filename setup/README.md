@@ -11,6 +11,12 @@
   * ...
 * [Git](https://git-scm.com)
 * [Postman](https://www.getpostman.com/downloads), [Httpie](https://httpie.org/#installation), or [Curl](https://curl.haxx.se/download.html) for REST calls
+* [mkcert](https://mkcert.dev/) to create trusted certificates for localhost. Please follow 
+  the [installation instructions](https://github.com/FiloSottile/mkcert#installation) to set this up
+  on your machine.
+* [Keystore Explorer](https://keystore-explorer.org/) to manage keystore contents. To install it just 
+  go to the [Keystore Downloads](https://keystore-explorer.org/downloads.html) page and get the appropriate
+  installer for your operating system
 
 In case you select [Postman](https://www.getpostman.com/downloads), then the provided [Postman Collection](oidc_workshop.postman_collection.json) might be helpful.
 Just import this [Postman Collection (Version 2.1 format)](../postman/library-server/Library-Server.postman_collection.json) into Postman.
