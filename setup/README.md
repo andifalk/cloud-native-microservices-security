@@ -18,7 +18,7 @@
   go to the [Keystore Downloads](https://keystore-explorer.org/downloads.html) page and get the appropriate
   installer for your operating system
 
-In case you select [Postman](https://www.getpostman.com/downloads), then the provided [Postman Collection](oidc_workshop.postman_collection.json) might be helpful.
+In case you select [Postman](https://www.getpostman.com/downloads), then the provided [Postman Collection](../postman/library-server/Library-Server.postman_collection.json) might be helpful.
 Just import this [Postman Collection (Version 2.1 format)](../postman/library-server/Library-Server.postman_collection.json) into Postman.
 
 ### IntelliJ specific requirements
