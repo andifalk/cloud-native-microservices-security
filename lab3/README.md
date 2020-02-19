@@ -40,22 +40,38 @@ To create a keystore containing the certificate with private/public key pair
 open a command line terminal then navigate to the subdirectory _src/main/resources_ of this project 
 and use the following command.
 
-```
-mkcert -p12-file server-keystore.p12 -pkcs12 localhost mydev.local
+```shell script
+mkcert -p12-file server-keystore.p12 -pkcs12 localhost
 ```
 
-Now you should have created a new file _server-keystore.p12_ in the subdirectory _src/main/resources_.
+This should lead to the following output:
 
-To enable SSL/TLS in the spring boot application add the following entries to the application.properties
+```shell script
+Created a new certificate valid for the following names
+ - "localhost"
 
-```properties
-server.port=8443
-server.ssl.enabled=true
-server.ssl.key-store=classpath:server-keystore.p12
-server.ssl.key-store-type=PKCS12
-server.ssl.key-store-password=changeit
-server.ssl.key-password=changeit
+The PKCS#12 bundle is at "server-keystore.p12"
+
+The legacy PKCS#12 encryption password is the often hardcoded default "changeit"
 ```
+
+Now you should now find the newly created file _server-keystore.p12_ in the subdirectory _src/main/resources_.
+
+To enable SSL/TLS in the spring boot application add the following entries to the _application.yml_ file:
+
+```yaml
+server:
+  port: 9443  
+  ssl:
+    enabled: true
+    key-store: classpath:server-keystore.p12
+    key-store-type: PKCS12
+    key-store-password: changeit
+    key-password: changeit
+```
+
+Now (re-)start the application and navigate to [https://localhost:8443/library](https://localhost:8443/library).
+You should recognize that the server application is now served using a secure Https connection.
 
 ## Setup the client certificate
 
@@ -64,8 +80,19 @@ our client at the server.
 Open a command line terminal again and navigate to subdirectory _src/main/resources_ of this project
 and then use the following command.
 
+```shell script
+mkcert -p12-file client-keystore.p12 -client -pkcs12 peter.parker@example.com
 ```
-mkcert -p12-file client-keystore.p12 -client -pkcs12 myuser
+
+This should lead to the following output:
+
+```shell script
+Created a new certificate valid for the following names
+ - "peter.parker@example.com"
+
+The PKCS#12 bundle is at "client-keystore.p12"
+
+The legacy PKCS#12 encryption password is the often hardcoded default "changeit"
 ```
 
 This file contains the client certificate including the private/public key pair.
@@ -84,7 +111,7 @@ But first we have to export the certificate from the existing keystore _client-k
 
 1. Open keystore with the Keystore Explorer. Select _client-keystore.p12_ in file dialog.
 2. Then right click on the single entry and select _Export/Export certificate chain_ and then use the 
-   settings as shown in the figure below.
+   settings as shown in the figure below (export it to a file named _pparker.cer_).
    
 ![CertExport](images/cert_export.png)   
 
@@ -93,16 +120,66 @@ Now we can import the exported single certificate into a new keystore.
 1. Open the explorer and then create a new keystore using the menu _File/New_. 
 2. Then chose _PKCS#12_ as type
 3. Now select the menu _Tools/Import Trusted Certificate_
-4. Select the exported file from previous section
-5. Save the keystore as _myuser-trust.p12_ and use password _changeit_ when prompted for
+4. Select the exported file _pparker.cer_ from previous section and use _peter.parker@example.com_ as alias when asked
+5. Save the keystore as _pparker-trust.p12_ and use password _changeit_ when prompted for
 
 Now let's use this new keystore:
 
-```properties
-server.ssl.trust-store=classpath:myuser-trust.p12
-server.ssl.trust-store-password=changeit
-server.ssl.client-auth=need
+```yaml
+server:
+  ssl:
+    trust-store: classpath:pparker-trust.p12
+    trust-store-password: changeit
+    client-auth: need
 ```
+
+We need the trust store to enable trust between the server application and the client certificate in the web browser.
+The property _client_auth_ specifies how mandatory the client certificate authentication is.
+Possible values for this property are:
+
+* __need__: The client certificate is mandatory for authentication
+* __want__: The client certificate is requested but not mandatory for authentication
+* __none__: The client certificate is not used at all
+
+As final step we have to configure X509 client authentication in _com.example.libraryserver.config.WebSecurityConfiguration.java_:
+
+```java
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfiguration {
+
+  // ...
+
+  @Configuration
+  public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+    private final UserDetailsService userDetailsService;
+
+    public ApiWebSecurityConfigurationAdapter(
+        @Qualifier("library-user-details-service") UserDetailsService userDetailsService) {
+      this.userDetailsService = userDetailsService;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+      http
+          // ...
+          .httpBasic(withDefaults())
+          .formLogin(withDefaults())
+          .x509(
+              x -> {
+                x.subjectPrincipalRegex("CN=(.*?),");
+                x.userDetailsService(userDetailsService);
+              });
+    }
+  }
+}
+```
+
+The changes above 
+
+* introduce a reference to the _UserDetailsService_ required for the X509 authentication
+* configure how to get the principle from the client certificate using a regular expression for the common name (CN)
 
 ### Reference Documentation
 For further reference, please consider the following sections:

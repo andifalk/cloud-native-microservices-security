@@ -7,11 +7,20 @@ spring:
     default-property-inclusion: non_null
 
 server:
-  port: 9090
+  port: 8443
   servlet:
     context-path: /library
   error:
     include-stacktrace: never
+  ssl:
+    enabled: true
+    key-store: classpath:server-keystore.p12
+    key-store-type: PKCS12
+    key-store-password: changeit
+    key-password: changeit
+    trust-store: classpath:pparker-trust.p12
+    trust-store-password: changeit
+    client-auth: need
 
 management:
   endpoint:
@@ -22,7 +31,6 @@ management:
       exposure:
         include: '*'
 
-
 info:
   application:
     name: library-server
@@ -30,4 +38,4 @@ info:
 
 logging:
   level:
-    org.springframework.security: info
+    org.springframework.security: debug
