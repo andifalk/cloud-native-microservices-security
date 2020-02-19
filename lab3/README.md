@@ -101,13 +101,9 @@ This file contains the client certificate including the private/public key pair.
 To authenticate your web browser for our Spring Boot server application just import
 the file _client-keystore.p12_ into the browsers certificate store.
 
-.Import for firefox
+![FirefoxImport](images/cert_import_firefox.png)*Import for Firefox*   
 
-![FirefoxImport](images/cert_import_firefox.png)   
-
-.Import for chrome
-
-![FirefoxImport](images/cert_import_chrome.png)   
+![FirefoxImport](images/cert_import_chrome.png)*Import for Chrome*   
 
 But this is not sufficient, the server application also needs just the certificate (with public key)
 to be able to validate the client certificate.
