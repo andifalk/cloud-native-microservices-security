@@ -80,13 +80,13 @@ our client at the server.
 Open a command line terminal again and navigate to subdirectory _src/main/resources_ of this project
 and then use the following command.
 
-```shell script
+```shell
 mkcert -p12-file client-keystore.p12 -client -pkcs12 peter.parker@example.com
 ```
 
 This should lead to the following output:
 
-```shell script
+```shell
 Created a new certificate valid for the following names
  - "peter.parker@example.com"
 
