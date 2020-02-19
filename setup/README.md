@@ -11,15 +11,26 @@
   * ...
 * [Git](https://git-scm.com)
 * [Postman](https://www.getpostman.com/downloads), [Httpie](https://httpie.org/#installation), or [Curl](https://curl.haxx.se/download.html) for REST calls
-* [mkcert](https://mkcert.dev/) to create trusted certificates for localhost. Please follow 
-  the [installation instructions](https://github.com/FiloSottile/mkcert#installation) to set this up
-  on your machine.
-* [Keystore Explorer](https://keystore-explorer.org/) to manage keystore contents. To install it just 
-  go to the [Keystore Downloads](https://keystore-explorer.org/downloads.html) page and get the appropriate
-  installer for your operating system
 
 In case you select [Postman](https://www.getpostman.com/downloads), then the provided [Postman Collection](../postman/library-server/Library-Server.postman_collection.json) might be helpful.
 Just import this [Postman Collection (Version 2.1 format)](../postman/library-server/Library-Server.postman_collection.json) into Postman.
+
+### Requirements for the MTLS lab
+
+* [mkcert](https://mkcert.dev/) to create trusted certificates for localhost. Please follow 
+  the [installation instructions](https://github.com/FiloSottile/mkcert#installation) to set this up
+  on your machine.
+* [Keystore Explorer](https://keystore-explorer.org/) to manage keystore contents. To install it just go to the [Keystore Downloads](https://keystore-explorer.org/downloads.html) page and get the appropriate
+  installer for your operating system
+  
+### Requirements for the Kubernetes lab  
+
+Depending on your operating system you have different choices to install Docker and a local Kubernetes cluster for this lab.
+
+* __Windows__: On Windows you can install [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install) together with included standalone Kubernetes server/client
+* __Mac OS__: On MAC you can install [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install) together with included standalone Kubernetes server/client
+* __Linux__: On Linux you might already have installed native Docker support, otherwise install [Docker for Linux](https://hub.docker.com/search?q=&type=edition&offering=community&operating_system=linux).
+  Regarding Kubernetes you can either install [Minikube](https://minikube.sigs.k8s.io/docs/start) + [VirtualBox](https://www.virtualbox.org/) or an alternative one like [Kind](https://kind.sigs.k8s.io/docs/user/quick-start).
 
 ### IntelliJ specific requirements
 

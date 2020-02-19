@@ -52,7 +52,8 @@ public class WebSecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
 
-    public ApiWebSecurityConfigurationAdapter(@Qualifier("library-user-details-service") UserDetailsService userDetailsService) {
+    public ApiWebSecurityConfigurationAdapter(
+        @Qualifier("library-user-details-service") UserDetailsService userDetailsService) {
       this.userDetailsService = userDetailsService;
     }
 
@@ -87,9 +88,7 @@ public class WebSecurityConfiguration {
                       .authenticated())
           .httpBasic(withDefaults())
           .formLogin(withDefaults())
-          .headers(
-              h -> h.httpStrictTransportSecurity().disable()
-          )
+          .headers(h -> h.httpStrictTransportSecurity().disable())
           .x509(
               x -> {
                 x.subjectPrincipalRegex("CN=(.*?),");
