@@ -18,14 +18,14 @@ use the following command.
 Make sure you also have set the _JAVA_HOME_ environment variable if you also want 
 to install the root certificate into the trust store of your JDK. 
 
-```shell
+```shell script
 export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
 mkcert -install
 ```
 
 This leads to an output similar to the following.
 
-```
+```shell script
 Using the local CA at "/home/xxx/.local/share/mkcert" ✨
 The local CA is installed in the system trust store! 👍
 The local CA is installed in the Firefox and/or Chrome/Chromium trust store! 👍
