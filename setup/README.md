@@ -32,6 +32,8 @@ Depending on your operating system you have different choices to install Docker 
 * __Linux__: On Linux you might already have installed native Docker support, otherwise install [Docker for Linux](https://hub.docker.com/search?q=&type=edition&offering=community&operating_system=linux).
   Regarding Kubernetes you can either install [Minikube](https://minikube.sigs.k8s.io/docs/start) + [VirtualBox](https://www.virtualbox.org/) or an alternative one like [Kind](https://kind.sigs.k8s.io/docs/user/quick-start).
 
+__Note:__ [Minikube](https://minikube.sigs.k8s.io/docs/start) + [VirtualBox](https://www.virtualbox.org/) would also be an alternative for Windows or Mac as well.
+
 ### IntelliJ specific requirements
 
 IntelliJ does not require any specific additional plugins or configuration.
