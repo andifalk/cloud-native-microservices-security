@@ -18,14 +18,14 @@ use the following command.
 Make sure you also have set the _JAVA_HOME_ environment variable if you also want 
 to install the root certificate into the trust store of your JDK. 
 
-```shell script
+```shell
 export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
 mkcert -install
 ```
 
 This leads to an output similar to the following.
 
-```shell script
+```shell
 Using the local CA at "/home/xxx/.local/share/mkcert" ✨
 The local CA is installed in the system trust store! 👍
 The local CA is installed in the Firefox and/or Chrome/Chromium trust store! 👍
@@ -40,13 +40,13 @@ To create a keystore containing the certificate with private/public key pair
 open a command line terminal then navigate to the subdirectory _src/main/resources_ of this project 
 and use the following command.
 
-```shell script
+```shell
 mkcert -p12-file server-keystore.p12 -pkcs12 localhost
 ```
 
 This should lead to the following output:
 
-```shell script
+```shell
 Created a new certificate valid for the following names
  - "localhost"
 
