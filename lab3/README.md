@@ -73,6 +73,8 @@ server:
 Now (re-)start the application and navigate to [https://localhost:8443/library](https://localhost:8443/library).
 You should recognize that the server application is now served using a secure Https connection.
 
+![SecuredBrowserPage](images/secured_browser_page.png)   
+
 ## Setup the client certificate
 
 First we need of course again a valid trusted client certificate to authenticate 
@@ -98,6 +100,14 @@ The legacy PKCS#12 encryption password is the often hardcoded default "changeit"
 This file contains the client certificate including the private/public key pair.
 To authenticate your web browser for our Spring Boot server application just import
 the file _client-keystore.p12_ into the browsers certificate store.
+
+.Import for firefox
+
+![FirefoxImport](images/cert_import_firefox.png)   
+
+.Import for chrome
+
+![FirefoxImport](images/cert_import_chrome.png)   
 
 But this is not sufficient, the server application also needs just the certificate (with public key)
 to be able to validate the client certificate.
@@ -166,6 +176,9 @@ public class WebSecurityConfiguration {
           // ...
           .httpBasic(withDefaults())
           .formLogin(withDefaults())
+          .headers(
+              h -> h.httpStrictTransportSecurity().disable()        
+          )
           .x509(
               x -> {
                 x.subjectPrincipalRegex("CN=(.*?),");
@@ -179,7 +192,20 @@ public class WebSecurityConfiguration {
 The changes above 
 
 * introduce a reference to the _UserDetailsService_ required for the X509 authentication
+* disable the Http strict transport security header (do not disable this on production, for localhost this can be a problem for testing other
+local web applications not providing a Https connection)
 * configure how to get the principle from the client certificate using a regular expression for the common name (CN)
+
+Now we are ready to restart the application.
+If you now navigate again to [https://localhost:8443/library](https://localhost:8443/library) then you will see
+a popup asking for the client certificate (you may have already several ones in your browser, so make sure you select 
+the correct one for _peter.parker@example.com_).
+
+![CertRequest](images/cert_identification_request.png)   
+
+In case you have problems with forcing the browser to redirect to Https for apps not providing Https on localhost
+just go to [How to Clear HSTS Settings on Chrome, Firefox and IE Browsers](https://www.ssl2buy.com/wiki/how-to-clear-hsts-settings-on-chrome-firefox-and-ie-browsers)
+and follow instructions for your web browser.
 
 ### Reference Documentation
 For further reference, please consider the following sections:

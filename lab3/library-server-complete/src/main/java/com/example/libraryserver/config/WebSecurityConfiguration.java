@@ -69,6 +69,9 @@ public class WebSecurityConfiguration {
                       .authenticated())
           .httpBasic(withDefaults())
           .formLogin(withDefaults())
+          .headers(
+              h -> h.httpStrictTransportSecurity().disable()
+          )
           .x509(
               x -> {
                 x.subjectPrincipalRegex("CN=(.*?),");
