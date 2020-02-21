@@ -15,5 +15,6 @@
 
 ## Bonus Labs
 
+* [CSRF Attack Demo](bonus-labs/csrf-attack-demo/README.md)
 * [Web Authn](bonus-labs/webauthn/README.md)
 * [Micronaut](bonus-labs/micronaut/README.md)
