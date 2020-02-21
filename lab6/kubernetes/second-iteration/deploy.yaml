@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: library-server-container-security-ctx
+  name: library-server-container-security-ctx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: library-server-container-security-ctx
+  template:
+    metadata:
+      labels:
+        app: library-server-container-security-ctx
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+      containers:
+      - image: workshop/library-server-container-rootless:1.0
+        name: library-server-container-security-ctx
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          privileged: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - ALL
+        readinessProbe:
+          httpGet:
+            path: /library
+            port: 9090
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /library/actuator/health
+            port: 9090
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        volumeMounts:
+          - name: tmp-volume
+            mountPath: /tmp
+      restartPolicy: Always
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}

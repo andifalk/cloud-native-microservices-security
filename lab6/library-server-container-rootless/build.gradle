@@ -82,7 +82,8 @@ docker {
 
 jib {
 	to {
-		image = 'andifalk/library-server-container-rootless:latest'
+		//image = 'andifalk/library-server-container-rootless:latest'
+		image = 'workshop/library-server-container-rootless:1.0'
 	}
 	container {
 		user = 1002

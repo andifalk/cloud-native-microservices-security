@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: library-server-root
+  name: library-server-root
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: library-server-root
+  template:
+    metadata:
+      labels:
+        app: library-server-root
+    spec:
+      containers:
+      - image: workshop/library-server-container-root:1.0
+        imagePullPolicy: Never
+        name: library-server-root
+        readinessProbe:
+          httpGet:
+            path: /library/actuator/health
+            port: 9090
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      restartPolicy: Always

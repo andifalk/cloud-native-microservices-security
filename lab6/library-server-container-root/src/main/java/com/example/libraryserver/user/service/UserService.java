@@ -15,7 +15,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@PreAuthorize("hasRole('LIBRARY_ADMIN')")
 @Transactional(readOnly = true)
 public class UserService {
 
@@ -29,21 +28,23 @@ public class UserService {
     this.idGenerator = idGenerator;
   }
 
+  @PreAuthorize("hasRole('LIBRARY_ADMIN')")
   public Optional<User> findOneByIdentifier(UUID identifier) {
     return userRepository.findOneByIdentifier(identifier);
   }
 
-  @PreAuthorize("isAnonymous() || isAuthenticated()")
   public Optional<User> findOneByEmail(String email) {
     return userRepository.findOneByEmail(email);
   }
 
+  @PreAuthorize("hasRole('LIBRARY_ADMIN')")
   public List<User> findAll() {
     LOGGER.trace("find all users");
 
     return userRepository.findAll();
   }
 
+  @PreAuthorize("hasRole('LIBRARY_ADMIN')")
   @Transactional
   public User save(User user) {
     LOGGER.info(SecurityMarkers.CONFIDENTIAL, "save user with password={}", user.getPassword());
@@ -56,6 +57,7 @@ public class UserService {
     return userRepository.save(user);
   }
 
+  @PreAuthorize("hasRole('LIBRARY_ADMIN')")
   @Transactional
   public boolean deleteOneIdentifier(UUID userIdentifier) {
     LOGGER.trace("delete user with identifier {}", userIdentifier);

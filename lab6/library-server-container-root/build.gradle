@@ -74,7 +74,8 @@ asciidoctor {
 }
 
 docker {
-	name 'andifalk/library-server-container-root:latest'
+	//name 'andifalk/library-server-container-root:latest'
+	name 'workshop/library-server-container-root:1.0'
 	files bootJar.archiveFile
 }
 
