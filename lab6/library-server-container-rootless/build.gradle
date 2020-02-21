@@ -1,0 +1,93 @@
+buildscript {
+	ext {
+		snippetsDir = file('build/generated-snippets')
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.2.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'com.adarshr.test-logger' version '2.0.0'
+	id 'org.asciidoctor.convert' version '1.5.8'
+	id "org.owasp.dependencycheck" version "5.3.0"
+	id 'java'
+	//id 'com.palantir.docker' version '0.22.1'
+	id 'com.google.cloud.tools.jib' version '2.0.0'
+}
+
+group = 'com.example'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.owasp:security-logging-logback:1.1.6'
+	implementation 'org.owasp.encoder:encoder:1.2.2'
+	implementation 'org.passay:passay:1.5.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+	useJUnitPlatform()
+	outputs.dir snippetsDir
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	setOptions([
+			'doctype': 'book',
+			'backend': 'html5'
+	])
+	setAttributes([
+			'snippets'          : snippetsDir,
+			'source-highlighter': 'coderay',
+			'toc'               : 'left',
+			'toclevels'         : '3',
+			'sectlinks'         : 'true'
+	])
+	dependsOn test
+}
+
+/*
+docker {
+	name 'andifalk/library-server-container-rootless:latest'
+	files bootJar.archiveFile
+}*/
+
+jib {
+	to {
+		image = 'andifalk/library-server-container-rootless:latest'
+	}
+	container {
+		user = 1002
+	}
+}
+
+tasks.build.dependsOn tasks.jib
+
