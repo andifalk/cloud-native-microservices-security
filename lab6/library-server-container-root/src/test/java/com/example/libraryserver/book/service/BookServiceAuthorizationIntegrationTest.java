@@ -129,8 +129,7 @@ class BookServiceAuthorizationIntegrationTest {
           .isThrownBy(
               () ->
                   cut.save(
-                      new Book("1234567890", "title", "desc", Collections.singleton("author"))))
-          .withMessage("Access is denied");
+                      new Book("1234567890", "title", "desc", Collections.singleton("author"))));
     }
 
     @DisplayName("borrowing a book with")
@@ -159,8 +158,7 @@ class BookServiceAuthorizationIntegrationTest {
     void deleteOneByIdentifier(String role) {
       createAuthenticationContext(role);
       assertThatExceptionOfType(AccessDeniedException.class)
-          .isThrownBy(() -> cut.deleteOneByIdentifier(UUID.randomUUID()))
-          .withMessage("Access is denied");
+          .isThrownBy(() -> cut.deleteOneByIdentifier(UUID.randomUUID()));
     }
   }
 }

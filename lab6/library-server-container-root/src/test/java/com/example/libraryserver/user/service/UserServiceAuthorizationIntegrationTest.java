@@ -105,8 +105,7 @@ class UserServiceAuthorizationIntegrationTest {
     void findOneByIdentifier(String role) {
       createAuthenticationContext(role);
       assertThatExceptionOfType(AccessDeniedException.class)
-          .isThrownBy(() -> cut.findOneByIdentifier(UUID.randomUUID()))
-          .withMessage("Access is denied");
+          .isThrownBy(() -> cut.findOneByIdentifier(UUID.randomUUID()));
     }
 
     @DisplayName("finding all books with")
@@ -115,8 +114,7 @@ class UserServiceAuthorizationIntegrationTest {
     void findAll(String role) {
       createAuthenticationContext(role);
       assertThatExceptionOfType(AccessDeniedException.class)
-          .isThrownBy(() -> cut.findAll())
-          .withMessage("Access is denied");
+          .isThrownBy(() -> cut.findAll());
     }
 
     @DisplayName("saving a book with")
@@ -133,8 +131,7 @@ class UserServiceAuthorizationIntegrationTest {
                           "Test",
                           "test@example.com",
                           "secret",
-                          Collections.singleton("USER"))))
-          .withMessage("Access is denied");
+                          Collections.singleton("USER"))));
     }
 
     @DisplayName("deleting a book with")
@@ -143,8 +140,7 @@ class UserServiceAuthorizationIntegrationTest {
     void deleteOneIdentifier(String role) {
       createAuthenticationContext(role);
       assertThatExceptionOfType(AccessDeniedException.class)
-          .isThrownBy(() -> cut.deleteOneIdentifier(UUID.randomUUID()))
-          .withMessage("Access is denied");
+          .isThrownBy(() -> cut.deleteOneIdentifier(UUID.randomUUID()));
     }
   }
 }
