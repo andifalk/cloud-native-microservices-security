@@ -33,7 +33,7 @@ As part of this lab we will customize several things for authentication:
 * Encode the password values to secure hashed ones in the database
 * Ensure a password policy to enforce secure passwords (a common source of hacking authentication are weak passwords)
 
-==== Encrypting Passwords
+## Encrypting Passwords
 
 We start by replacing the default user/password with our own persistent user storage (already present in MongoDB).
 To do this we add a new class _WebSecurityConfiguration_ to package _com.example.libraryserver.config_ having the following
