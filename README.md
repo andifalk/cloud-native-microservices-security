@@ -8,7 +8,7 @@
 
 ## Slides
 
-* [Slides for Workshop (PDF)]()
+* [Slides for Workshop (PDF)](https://github.com/andifalk/cloud-native-microservices-security/raw/master/Cloud%20Native%20Microservice%20Security.pdf)
 
 ## Introduction
 
