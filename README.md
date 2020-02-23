@@ -6,7 +6,9 @@
 
 ## Introduction
 
-* [Requirements and Setup](setup/README.md)  
+* [Requirements and Setup](setup)  
+* [Demo Application Architecture](application-architecture)  
+
 
 ## Hands-On Labs
      
