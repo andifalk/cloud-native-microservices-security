@@ -2,7 +2,13 @@
 
 # Cloud-Native Microservice Security Boot-Camp
 
+## Tutorial
+
 [Tutorial](https://andifalk.gitbook.io/cloud-native-microservices-security)
+
+## Slides
+
+* [Slides for Workshop (PDF)]()
 
 ## Introduction
 
