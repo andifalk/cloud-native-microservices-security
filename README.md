@@ -33,4 +33,3 @@
 
 * [CSRF Attack Demo](bonus-labs/csrf-attack-demo)
 * [Web Authn](bonus-labs/webauthn)
-* [Micronaut](bonus-labs/micronaut)
