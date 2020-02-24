@@ -49,7 +49,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserRestControllerIntegrationTest {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
+
   @Autowired private WebApplicationContext context;
+
   private MockMvc mvc;
 
   @BeforeEach

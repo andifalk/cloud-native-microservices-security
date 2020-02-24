@@ -5,12 +5,10 @@ import com.example.libraryserver.user.service.InvalidPasswordError;
 import com.example.libraryserver.user.service.PasswordValidationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
@@ -18,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 @DisplayName("Password validation")
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = PasswordValidationConfiguration.class)
 public class PasswordValidationTest {
 
