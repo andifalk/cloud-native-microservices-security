@@ -35,7 +35,7 @@ As part of this lab we will customize several things for authentication:
 
 ## Encrypting Passwords
 
-We start by replacing the default user/password with our own persistent user storage (already present in MongoDB).
+We start by replacing the default user/password with our own persistent user storage (already present in DB).
 To do this we add a new class _WebSecurityConfiguration_ to package _com.example.libraryserver.config_ having the following
 contents.
 
