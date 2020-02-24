@@ -417,7 +417,7 @@ If you restart the application now you have to use the following user credential
 As we now have a persistent authenticated user we can now also use this user to check if the current user is allowed
 to borrow or return a book. This requires changes in _BookService_ and _BookRestController_.
 
-First change the class _UserService_:
+First change the class _BookService_:
 
 ```java
 package com.example.libraryserver.book.service;
@@ -522,7 +522,7 @@ public class BookService {
 ```
 _BookService.java_
 
-Then please adapt the _BooRestController_ accordingly.
+Then please adapt the _BookRestController_ accordingly.
 
 ```java
 package com.example.libraryserver.book.web;
@@ -1005,7 +1005,7 @@ This is the end of step 2 of the workshop.
 
 __NOTE:__ You find the completed code in project _lab2/library-server-complete_.
 
-In the next lab we will add the authorization part.
+In the next lab we will add the MTLS authentication.
 
 
 
