@@ -1001,11 +1001,11 @@ public class ErrorHandler {
 }
 ```
 
-This is the end of step 2 of the workshop.
+This is the end of lab 2 of the workshop.
 
 __NOTE:__ You find the completed code in project _lab2/library-server-complete_.
 
-In the next lab we will add the MTLS authentication.
+In the next lab we will add the Mutual TLS authentication.
 
 
 
