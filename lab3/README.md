@@ -10,11 +10,18 @@ For this lab you need the following requirements:
 * [Keystore Explorer](https://keystore-explorer.org/) to manage keystore contents. To install it just 
   go to the [Keystore Downloads](https://keystore-explorer.org/downloads.html) page and get the appropriate
   installer for your operating system
+  
+In this lab we will use _mkcert_, a tool that makes it quite easy to setup a local Certificate Authority
+and create certificates signed by this.
+Without _mkcert_ you would have to use several java keytool commands that are hard to remember 
+to achieve the same.
+In case you want to know more on how to do this with keytool then check out the corresponding
+[blog article](https://www.novatec-gmbh.de/en/blog/spring-boot-applications-tls-http2).  
 
 ## Setup a local Certificate Authority (CA)
 
 To create a local certificate authority (with your own root certificate)
-use the following command.
+use the following _mkcert_ command.
 Make sure you also have set the _JAVA_HOME_ environment variable if you also want 
 to install the root certificate into the trust store of your JDK. 
 
@@ -61,7 +68,7 @@ To enable SSL/TLS in the spring boot application add the following entries to th
 
 ```yaml
 server:
-  port: 9443  
+  port: 8443  
   ssl:
     enabled: true
     key-store: classpath:server-keystore.p12

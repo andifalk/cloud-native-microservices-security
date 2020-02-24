@@ -130,7 +130,7 @@ class BookRestControllerIntegrationTest {
                   .with(
                       user(
                           userDetails(
-                              DataInitializer.BANNER_USER_IDENTIFIER, "ROLE_LIBRARY_USER"))))
+                              DataInitializer.BANNER_USER_IDENTIFIER, "LIBRARY_USER"))))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.borrowedByUser").exists())
           .andDo(document("borrow-book"));
@@ -148,7 +148,7 @@ class BookRestControllerIntegrationTest {
                   .with(csrf())
                   .with(
                       user(
-                          userDetails(DataInitializer.WAYNE_USER_IDENTIFIER, "ROLE_LIBRARY_USER"))))
+                          userDetails(DataInitializer.WAYNE_USER_IDENTIFIER, "LIBRARY_USER"))))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.borrowedByUser").doesNotExist())
           .andDo(document("return-book"));

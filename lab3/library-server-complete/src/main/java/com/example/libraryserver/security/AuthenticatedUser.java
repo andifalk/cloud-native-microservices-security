@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class AuthenticatedUser extends User implements UserDetails {
 
@@ -21,7 +22,9 @@ public class AuthenticatedUser extends User implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return AuthorityUtils.commaSeparatedStringToAuthorityList(String.join(",", getRoles()));
+
+    return AuthorityUtils.commaSeparatedStringToAuthorityList(
+            getRoles().stream().map(rn -> "ROLE_" + rn).collect(Collectors.joining(",")));
   }
 
   @Override

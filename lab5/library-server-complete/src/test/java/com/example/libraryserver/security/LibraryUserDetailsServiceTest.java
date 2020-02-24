@@ -37,6 +37,8 @@ class LibraryUserDetailsServiceTest {
                     "Hans", "Test", "test@example.com", "secret", Collections.singleton("USER"))));
     UserDetails userDetails = cut.loadUserByUsername("test@example.com");
     assertThat(userDetails).isNotNull().isInstanceOf(AuthenticatedUser.class);
+    assertThat(userDetails.getAuthorities().iterator().next().getAuthority()).isEqualTo("ROLE_USER");
+
   }
 
   @DisplayName("reports expected error when user does not exist")

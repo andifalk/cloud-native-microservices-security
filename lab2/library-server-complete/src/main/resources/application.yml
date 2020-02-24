@@ -22,7 +22,6 @@ management:
       exposure:
         include: '*'
 
-
 info:
   application:
     name: library-server

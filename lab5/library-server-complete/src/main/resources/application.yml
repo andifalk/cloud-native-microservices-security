@@ -20,7 +20,7 @@ server:
     key-password: changeit
     trust-store: classpath:pparker-trust.p12
     trust-store-password: changeit
-    client-auth: need
+    client-auth: none
 
 management:
   endpoint:

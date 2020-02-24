@@ -28,7 +28,7 @@ public class ApiController {
     this.customerService = customerService;
   }
 
-  @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+  @PostMapping(path = "/create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void create(Customer customer) {
 

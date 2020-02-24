@@ -11,7 +11,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests(authReq -> authReq.anyRequest().authenticated())
-        //.csrf().disable()
+        .csrf().disable()
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
   }
