@@ -16,7 +16,8 @@
   * [6.1.Docker as Root](lab6/library-server-container-root/README.md)
   * [6.2.Docker as NonRoot](lab6/library-server-container-rootless/README.md)
   * [6.3.Kubernetes Deployment](lab6/kubernetes/first-iteration/README.md)
-  * [6.4.Secure Kubernetes Deployment](lab6/kubernetes/second-iteration/README.md)
+  * [6.4.Kubernetes Pod Security Context](lab6/kubernetes/second-iteration/README.md)
+  * [6.5.Kubernetes Pod Security Policies](lab6/kubernetes/third-iteration/README.md)
 
 ## Bonus Labs
 

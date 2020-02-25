@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: library-server-with-policy
+  name: library-server-with-policy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: library-server-with-policy
+  template:
+    metadata:
+      labels:
+        app: library-server-with-policy
+    spec:
+      serviceAccountName: no-root-policy-serviceaccount
+      automountServiceAccountToken: false
+      containers:
+        - image: workshop/library-server-container-rootless:1.0
+          name: library-server-with-policy
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+            requests:
+              cpu: "0.5"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /library
+              port: 9090
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /library/actuator/health
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 5  
+          volumeMounts:
+            - name: tmp-volume
+              mountPath: /tmp
+      restartPolicy: Always
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
