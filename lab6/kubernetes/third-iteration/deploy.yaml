@@ -17,7 +17,7 @@ spec:
       serviceAccountName: no-root-policy-serviceaccount
       automountServiceAccountToken: false
       containers:
-        - image: workshop/library-server-container-rootless:1.0
+        - image: andifalk/library-server-container-rootless:1.0
           name: library-server-with-policy
           resources:
             limits:

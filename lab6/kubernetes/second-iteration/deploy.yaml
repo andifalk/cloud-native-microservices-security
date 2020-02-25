@@ -18,7 +18,7 @@ spec:
       securityContext:
         runAsNonRoot: true
       containers:
-      - image: workshop/library-server-container-rootless:1.0
+      - image: andifalk/library-server-container-rootless:1.0
         name: library-server-container-security-ctx
         resources:
           limits:

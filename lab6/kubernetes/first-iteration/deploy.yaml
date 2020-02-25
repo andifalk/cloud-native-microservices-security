@@ -15,8 +15,7 @@ spec:
         app: library-server-root
     spec:
       containers:
-      - image: workshop/library-server-container-root:1.0
-        imagePullPolicy: Never
+      - image: andifalk/library-server-container-root:1.0
         name: library-server-root
         readinessProbe:
           httpGet:

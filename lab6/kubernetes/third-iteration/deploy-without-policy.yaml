@@ -15,7 +15,7 @@ spec:
         app: library-server-no-policy
     spec:
       containers:
-        - image: workshop/library-server-container-rootless:1.0
+        - image: andifalk/library-server-container-rootless:1.0
           name: library-server-no-policy
           resources:
             limits:
