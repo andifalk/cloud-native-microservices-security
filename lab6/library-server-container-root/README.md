@@ -28,7 +28,7 @@ You can prove this by using these commands:
 
 ```bash
 docker container run --rm --detach --name hello-root \
--p 8080:8080 andifalk/hello-root:latest
+-p 9090:9090 andifalk/library-server-container-root:latest
 docker exec hello-root whoami
 ```
 

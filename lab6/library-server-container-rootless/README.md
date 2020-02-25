@@ -19,7 +19,7 @@ You can prove that the container now does not run with root any more by using th
 
 ```bash
 docker container run --rm --detach --name hello-rootless \
--p 8080:8080 andifalk/hello-rootless:latest
+-p 9090:9090 andifalk/library-server-container-rootless:latest
 docker exec hello-rootless whoami
 ```
 
