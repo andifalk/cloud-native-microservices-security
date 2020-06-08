@@ -5,8 +5,8 @@ and how to defend against this attack type.
 
 The demo provides a simple Rest API dealing with customers:
 
-* [localhost:8080/api](http://localhost/api): Gets the list of customers
-* [localhost:8080/api/create?firstname=A&lastname=BadGuy](http://localhost/api/create): Creates a customer via a GET request 
+* [localhost:8080/api](http://localhost:8080/api): Gets the list of customers
+* [localhost:8080/api/create?firstname=A&lastname=BadGuy](http://localhost:8080/api/create?firstname=A&lastname=BadGuy): Creates a customer via a GET request 
   (Just for the demo to show why it is a __BAD__ idea to use GET requests to create resources in Rest APIs)
 * [localhost:8080/web/create](http://localhost:8080/web/create): Creates a customer via a POST request
 * [localhost:8080/web/form](http://localhost:8080/web/form): Shows a web form (Spring MVC/Thymeleaf) to create 
@@ -39,5 +39,5 @@ and NOT for GET requests. This basically is why it is a __BAD__ idea to use GET 
 
 So keep CSRF protection enabled, you may switch it off for two reasons:
 
-1. You are using stateless authentication using bearer tokens (so no session cookies needed any more)
+1. You are using stateless authentication using bearer tokens (so no session cookies needed anymore)
 2. You are just doing it for demo purposes via postman or curl
