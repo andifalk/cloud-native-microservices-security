@@ -213,7 +213,7 @@ and follow instructions for your web browser.
 ### Reference Documentation
 For further reference, please consider the following sections:
 
-* [Spring Security](https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/htmlsingle/#boot-features-security)
+* [Spring Security](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/htmlsingle/#boot-features-security)
 
 ### Guides
 The following guides illustrate how to use some features concretely:
