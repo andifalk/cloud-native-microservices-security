@@ -4,21 +4,31 @@
 
 <head>
     <title>CustomerForm</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 
 <body>
+<div class="container">
+    <h2>Customer Form</h2>
 
-<h2>Customer Form</h2>
-
-<form action="#" th:action="@{/web}" th:object="${customer}" method="post">
-    <label for="firstName">First Name</label>
-    <input id="firstName" type="text" th:field="*{firstName}" />
-    <label for="lastName">Last Name</label>
-    <input id="lastName" type="text" th:field="*{lastName}" />
-    <button type="submit" name="submitCustomer">Submit</button>
-</form>
-
+    <form action="#" th:action="@{/api/create}" th:object="${customer}" method="post">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input id="firstName" type="text" class="form-control" th:field="*{firstName}"/>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" type="text" class="form-control" th:field="*{lastName}"/>
+        </div>
+        <button type="submit" name="submitCustomer" class="btn btn-primary">Submit</button>
+    </form>
+    <hr>
+    <p>
+    <a th:href="@{/}" class="btn btn-primary btn-lg active">Show List</a>
+    </p>
+</div>
 </body>
 
 </html>

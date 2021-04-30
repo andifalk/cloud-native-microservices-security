@@ -1,4 +1,4 @@
-package com.example.csrf.attack.security;
+package com.example.csrf.attack.config;
 
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

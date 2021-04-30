@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+
+<head>
+    <title>Customer App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Customer App</h2>
+
+    <div th:unless="${#lists.isEmpty(allCustomers)}">
+
+        <h2>List of Customers</h2>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${allCustomers}">
+                <td th:text="${customer.firstName}">Firstname</td>
+                <td th:text="${customer.lastName}">Lastname</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a th:href="@{/web/form}" class="btn btn-primary btn-lg active">Add customer</a>
+
+</div>
+
+</body>
+
+</html>
