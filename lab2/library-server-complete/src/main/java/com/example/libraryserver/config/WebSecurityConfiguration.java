@@ -58,6 +58,8 @@ public class WebSecurityConfiguration {
                       .permitAll()
                       .mvcMatchers("/")
                       .permitAll()
+                      .mvcMatchers("/v3/api-docs")
+                      .permitAll()
                       .anyRequest()
                       .authenticated())
           .httpBasic(withDefaults())

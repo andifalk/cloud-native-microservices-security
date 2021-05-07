@@ -39,6 +39,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation("org.springdoc:springdoc-openapi-ui:1.5.8")
 	implementation 'org.owasp:security-logging-logback:1.1.6'
 	implementation 'org.owasp.encoder:encoder:1.2.2'
 	implementation 'org.passay:passay:1.5.0'
