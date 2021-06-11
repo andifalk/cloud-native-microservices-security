@@ -4,7 +4,7 @@
 
 ### General Requirements
 
-* [Java SDK](https://adoptopenjdk.net) Version 8 or 11 (LTS versions) and 15 should work as well
+* [Java SDK](https://adoptopenjdk.net) Version 11 (LTS version) or later should work
 * A Java IDE like
   * [Eclipse](https://www.eclipse.org/downloads)
   * [Spring Toolsuite](https://spring.io/tools)
@@ -32,7 +32,7 @@ Depending on your operating system you have different choices to install Docker 
 * __Windows__: On Windows you can install [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install) together with included standalone Kubernetes server/client
 * __Mac OS__: On MAC you can install [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install) together with included standalone Kubernetes server/client
 * __Linux__: On Linux you might already have installed native Docker support, otherwise install [Docker for Linux](https://hub.docker.com/search?q=&type=edition&offering=community&operating_system=linux).
-  Regarding Kubernetes you can either install [Minikube](https://minikube.sigs.k8s.io/docs/start) + [VirtualBox](https://www.virtualbox.org/) or an alternative one like [Kind](https://kind.sigs.k8s.io/docs/user/quick-start).
+  Regarding Kubernetes, you can either install [Minikube](https://minikube.sigs.k8s.io/docs/start) + [VirtualBox](https://www.virtualbox.org/) or an alternative one like [Kind](https://kind.sigs.k8s.io/docs/user/quick-start).
 
 __Note:__ [Minikube](https://minikube.sigs.k8s.io/docs/start) + [VirtualBox](https://www.virtualbox.org/) would also be an alternative for Windows or Mac as well.
 
@@ -49,7 +49,7 @@ In case you want to stick to your plain Eclipse installation then you have to ad
 eclipse marketplace: 
 
 * Buildship Gradle Integration (Version 3.x). This might be already pre-installed depending 
-on your eclipse variant (e.g. Eclipse JavaEE) installed
+on your eclipse variant (e.g., Eclipse JavaEE) installed
 * Spring Tools 4 for Spring Boot (Spring Tool Suite 4)
 
 ### Visual Studio Code specific requirements

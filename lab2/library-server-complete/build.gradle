@@ -1,11 +1,5 @@
-buildscript {
-	ext {
-		snippetsDir = file('build/generated-snippets')
-	}
-}
-
 plugins {
-	id 'org.springframework.boot' version '2.4.5'
+	id 'org.springframework.boot' version '2.5.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'com.adarshr.test-logger' version '3.0.0'
 	id 'org.asciidoctor.convert' version '1.5.8'
@@ -15,20 +9,14 @@ plugins {
 
 group = 'com.example'
 version = '1.0.0-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
 }
 
 dependencies {
@@ -39,10 +27,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation("org.springdoc:springdoc-openapi-ui:1.5.8")
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.9'
 	implementation 'org.owasp:security-logging-logback:1.1.6'
-	implementation 'org.owasp.encoder:encoder:1.2.2'
-	implementation 'org.passay:passay:1.5.0'
+	implementation 'org.owasp.encoder:encoder:1.2.3'
+	implementation 'org.passay:passay:1.6.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

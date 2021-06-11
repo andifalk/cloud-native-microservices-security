@@ -1,4 +1,6 @@
-![](https://github.com/andifalk/cloud-native-microservices-security/workflows/Java%20CI/badge.svg)
+![License](https://img.shields.io/badge/License-Apache%20License%202.0-brightgreen.svg)
+![Java Build](https://github.com/andifalk/cloud-native-microservices-security/workflows/Java%20CI/badge.svg)
+[![Release](https://img.shields.io/github/release/andifalk/cloud-native-microservices-security.svg?style=flat)](https://github.com/andifalk/cloud-native-microservices-security/releases)
 
 # Cloud-Native Microservice Security Boot-Camp
 
